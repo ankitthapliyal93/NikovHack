@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<h1>The XMLHttpRequest Object</h1>
+
+<button type="button" onclick="loadDoc()">Get my Housing collection</button>
+<br><br>
+<div id="new"></div>
+
+<table id="demo"></table>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+
+  xhttp.open("GET", "https://www.makaan.com/petra/app/v4/project-detail/642059?selector={}&sourceDomain=Makaan", true);
+  xhttp.send();
+}
+
+
+function myFunction(xml) {
+
+  //document.getElementById("new").innerHTML=xml.responseXML;
+  console.log("Hello");
+
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="";
+  var x = xmlDoc.getElementsByTagName("data");
+  for (i = 0; i <x.length; i++) { 
+    table += "<tr><td>" +x[i].getElementsByTagName("projectId")[0].childNodes[0].nodeValue +"</td><td>" + x[i].getElementsByTagName("isHotProject")[0].childNodes[0].nodeValue +"</td></tr>";
+  }
+
+  document.getElementById("demo").innerHTML = table;*/
+}
+</script>
+
+</body>
+</html>

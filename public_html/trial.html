@@ -1,0 +1,31 @@
+<html>
+<head></head>
+<body>
+ <script src="jquery-3.1.0.min.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+    $.ajax({
+  url: "/img",
+  success: function(data){
+  	console.log("Hello\n"+data);
+
+     $(data).find("a:contains(.jpg)").each(function(){
+        // will loop through 
+        var images = $(this).attr("href");
+        console.log("Read"+images);
+
+        $('<p></p>').html(images).appendTo('#files')
+
+     });
+  }
+});
+});
+</script>
+
+
+
+
+<div id="files"/>
+
+</body>
+</html>

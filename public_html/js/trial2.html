@@ -1,0 +1,156 @@
+<html>
+<head>
+</head>
+<body>
+<script src="jquery-3.1.0.min.js"></script>
+<script>
+
+function cTextObject () {
+ 
+    this.m_strText = "";
+    this.m_cBoundingCoordinates = [];
+    this.mergedBefore=false;   //To keep track of weather it was merged with other string before
+    this.stringMergeIndex=-1; //To keep Track of where it was merged
+}
+
+
+function stringListObject () {
+    this.strText="";
+    this.font_size=0;
+}
+
+sanitizedText=[];
+var obj=new cTextObject();
+obj.m_strText="ankit thapliyal"
+obj.m_cBoundingCoordinates=[{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}];
+sanitizedText.push(obj);
+
+ obj=new cTextObject();
+obj.m_strText="ankit"
+obj.m_cBoundingCoordinates=[{x:200,y:250},{x:400,y:250},{x:400,y:350},{x:200,y:350}];
+sanitizedText.push(obj);
+
+ obj=new cTextObject();
+obj.m_strText="thapliyal"
+obj.m_cBoundingCoordinates=[{x:418,y:250},{x:600,y:250},{x:600,y:350},{x:418,y:350}];
+sanitizedText.push(obj);
+
+ obj=new cTextObject();
+obj.m_strText="intern"
+obj.m_cBoundingCoordinates=[{x:200,y:200},{x:400,y:200},{x:400,y:230},{x:200,y:230}];
+sanitizedText.push(obj);
+
+obj=new cTextObject();
+obj.m_strText="Proptiger"
+obj.m_cBoundingCoordinates=[{x:200,y:100},{x:400,y:100},{x:400,y:150},{x:200,y:150}];
+sanitizedText.push(obj);
+
+
+obj=new cTextObject();
+obj.m_strText="Company"
+obj.m_cBoundingCoordinates=[{x:200,y:50},{x:400,y:50},{x:400,y:100},{x:200,y:100}];
+sanitizedText.push(obj);
+
+function refineText (sanitizedText) {  
+      
+      var stringList=[];          //List to maintain the list of strings to be searched in makaan
+      var marginOfError=5;          //difference between the font-size.
+      var verticalMargin=5;            // Keeping distance check.
+      var horizontalMargin=20;
+      var verticalCloseMargin=5;
+      var horizontalCloseMargin=5;
+    console.log("here1");
+    console.log(sanitizedText);
+      
+      for(var index = 1; index < sanitizedText.length-1;index++){
+            
+            var minVertical=Infinity;
+            var minHorizontal=Infinity;
+            var verticalCloseIndex=-1;
+            var horizontalCloseIndex=-1;
+            var currHeight=sanitizedText[index].m_cBoundingCoordinates[3].y - sanitizedText[index].m_cBoundingCoordinates[0].y;
+
+            for(var tempIndex=index+1;tempIndex < sanitizedText.length;tempIndex++){
+
+                var verticalDistance=Math.abs(sanitizedText[tempIndex].m_cBoundingCoordinates[3].y - sanitizedText[index].m_cBoundingCoordinates[0].y);
+                var horizontalDistance=Math.abs(sanitizedText[tempIndex].m_cBoundingCoordinates[0].x - sanitizedText[index].m_cBoundingCoordinates[1].x);
+                var verticalClose=Math.abs(sanitizedText[tempIndex].m_cBoundingCoordinates[0].y - sanitizedText[index].m_cBoundingCoordinates[0].y);
+                var horizontalClose=Math.abs(sanitizedText[tempIndex].m_cBoundingCoordinates[0].x - sanitizedText[index].m_cBoundingCoordinates[0].x);
+                console.log(verticalClose+" "+horizontalDistance+" "+minHorizontal);
+                if(verticalClose <= verticalCloseMargin && horizontalDistance <= horizontalMargin && horizontalDistance <= minHorizontal ){
+                      minHorizontal=horizontalDistance;    //need to keep track at this point
+                      horizontalCloseIndex=tempIndex;
+                  }
+                else if(horizontalClose<= horizontalCloseMargin && verticalDistance <= verticalMargin && verticalDistance<=minVertical ){
+                   minVertical=verticalDistance;
+                   verticalCloseIndex=tempIndex;
+                  }
+
+              }
+
+            if( !(isFinite(minVertical) || isFinite(minHorizontal))) {    //If nothing else is close to it now
+                    if(sanitizedText[index].mergedBefore==false) {         // If not merged before then add it as new string else do nothing
+                        var stringObject=new stringListObject();
+                        stringObject.strText=sanitizedText[index].m_strText;
+                        stringObject.font_size=currHeight;
+                        stringList.push(stringObject);
+                        console.log("\nCase7: "+stringObject.strText);
+                      }
+                  }
+            else {
+                    var nextIndex;
+                    if(minVertical<minHorizontal){
+                        nextIndex=verticalCloseIndex;      
+                      }
+                    else{
+                       nextIndex=horizontalCloseIndex;
+                    }
+
+                    var nextHeight=sanitizedText[nextIndex].m_cBoundingCoordinates[3].y - sanitizedText[nextIndex].m_cBoundingCoordinates[0].y;
+                    console.log(sanitizedText[index].mergedBefore);
+                    if(sanitizedText[index].mergedBefore==false) {
+                        var stringObject=new stringListObject();
+                        stringObject.strText=sanitizedText[index].m_strText +" "+ sanitizedText[nextIndex].m_strText;
+                        stringObject.font_size=Math.max(currHeight,nextHeight);
+                        stringList.push(stringObject);
+                        sanitizedText[nextIndex].mergedBefore=true;
+                        sanitizedText[nextIndex].stringMergeIndex=stringList.indexOf(stringObject);
+
+                                console.log("\nCase1: " +stringObject.strText+stringList);
+                        }
+                    else{
+                      stringList[sanitizedText[index].stringMergeIndex].strText+=(" " + sanitizedText[nextIndex].m_strText);
+                      sanitizedText[nextIndex].mergedBefore=true;
+                      sanitizedText[nextIndex].stringMergeIndex=stringList.indexOf(stringObject);
+                    }
+
+                }
+
+
+
+            }
+
+            if(sanitizedText[index].mergedBefore == false) {      //for last text detected
+                    var stringObject=new stringListObject();
+                    stringObject.strText=sanitizedText[index].m_strText;
+                    stringObject.font_size=currheight;
+                    stringList.push(stringObject);
+                    console.log("\nCase7: "+stringObject.strText);
+                  }
+
+            var j=0;
+            stringList.sort(  function(a, b) {
+                  return parseFloat(b.font_size) - parseFloat(a.font_size);
+                });
+            for(var i=0;i<= stringList.length-1;i++){
+              console.log(stringList[i].strText+" "+stringList[i].font_size);
+              j++;
+            }         
+
+
+
+        }
+  refineText(sanitizedText);
+</script>
+</body>
+</html>

@@ -2,36 +2,113 @@
 <html>
 
 	<head>
-		<title>Kalashnikov</title>
+		<title>PropCam</title>
 		<meta charset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel='stylesheet' href='css/main.css'>
+		<link rel='stylesheet' href='css/main.css'>
+		<link rel="stylesheet" type="text/css" href="css/property-details.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 
         <script src="js/jquery-3.1.0.min.js"></script>
-		<script src="js/capture.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 		<script src="js/request.js"></script>
+		<script src="js/capture.js"></script>
 		<script src="js/sanitize.js"></script>
 		<script src="js/search.js"></script>
+		<script src="js/forTest.js"></script>
 		<script src="https://apis.google.com/js/api.js"></script>
 	</head>
 
 	<body>
-		<div class="camera">
-            <h1>Take photo</h1>
-			<video class="camera-view" id="video">Video stream not available.</video>
-			<button class="camera-capture-button" id="startbutton"></button>
-		</div>
 
-        <div class="camera-result-wrapper">
-    		<canvas class="camera-result" id="canvas"></canvas>
+		<div class="container">
+			<h1>Test Product</h1>
+			<ul class="nav nav-tabs nav-justified">
+				  <li role="presentation" class="active"><a href="#mainIdea" data-toggle="tab">Mobile Service</a></li>
+				  <li role="presentation"><a href="#imageTry" data-toggle="tab">Test Image</a></li>
+				  <li role="presentation"><a href="#results" data-toggle="tab">Results</a></li>
+			</ul>
 
-            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
-            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="mainIdea">
+					 	
+					 	 <div class="camera">
+				            <h1>Take photo</h1>
+							<video class="camera-view" id="video">Video stream not available.</video>
+							<button class="camera-capture-button" id="startbutton"></button>
+						</div>
 
-    		<div class="output">
-    			<img id="photo" alt="The screen capture will appear in this box.">
-    		</div>
-        </div>
+			        	<div class="camera-result-wrapper">
+				    		<canvas class="camera-result" id="canvas"></canvas>
+
+				            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
+				            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
+
+				    		<div class="output">
+				    			<img id="photo" alt="The screen capture will appear in this box.">
+				    		</div>
+				    		<div id="propResults"></div>
+				        </div>
+				        
+				        
+			     </div>
+
+			     <div class="tab-pane fade" id="imageTry">
+			     		<br>
+			     		<h4>Please Enter the Image name and press Submit to Proceed.</h4>
+			     		<br>
+				        <form class="form-horizontal">
+							  <div class="form-group">
+							    <label class="control-label col-sm-2" for="Image Name">Image:</label>
+							    <div class="col-sm-6">
+							      <input type="text" class="form-control" id="imgPath" placeholder="Enter Image Name">
+							    </div>
+							  </div>
+							  <div class="form-group"> 
+							    <div class="col-sm-offset-2 col-sm-4 col-sm-10">
+							      <button type="button" class="btn btn-default" id="submitImg">Submit</button>
+							   	</div>
+							  </div>
+							  <br>
+							  <div class="form-group">
+							    <label class="control-label col-sm-3" for="fileupload"> Select a file to upload:</label>
+							    <div class="col-sm-6">
+							      
+							      <input type="file" class="form-control" name="fileupload" value="fileupload" id="fileupload">
+							    </div>
+							  </div>
+							  <div class="form-group"> 
+							    <div class="col-sm-offset-3 col-sm-4 col-sm-10">
+							    	<button type="button" class="btn btn-default" id="submit">Submit</button>
+							   	</div>
+							  </div>
+							  <div id="showResults"></div>
+						</form>
+			     </div>
+
+				 <div class="tab-pane fade" id="results">
+				 	<button type="button" class="btn btn-success" id="startProcess">Start Testing</button>
+			        <table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Image</th>
+					        <th>Project</th>
+					        <th>OCR Response</th>
+					        <th>ResultText</th>
+					        <th>Result</th>
+					      </tr>
+					    </thead>
+					    <tbody id="tableContent">
+			
+					    </tbody>
+					  </table>
+				</div>
+			
+			</div>
+
+			
+
+	</div>
+
 	</body>
 </html>

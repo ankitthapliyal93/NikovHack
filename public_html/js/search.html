@@ -1,0 +1,49 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/property-details.css" />
+</head>
+<body>
+<script src="jquery-3.1.0.min.js"></script>
+
+<div id="propResults"></div>
+
+<script >
+
+function createResultNode(nodeData){
+
+    var div=document.createElement("div");
+    div.setAttribute("class","resultNode");
+    div.innerHTML+=("Builder ID : "nodeData.builderId+"\n"+"Builder Name : "nodeData.builderName+"\n"+"Display Text : "nodeData.displayText+"\n"+"Entitity Name : "nodeData.entityName+"\n");
+    return div;
+}
+
+
+function talkToMakan() {
+    var url = "https://www.proptiger.com/columbus/app/v6/typeahead?query=dlf&rows=5&city=GURGAON&enhance=gp&category=buy&view=buyer&sourceDomain=Proptiger";
+    var data = {
+        "member": "rohini"
+    };
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        data:data,
+        success: function(response) {
+           console.log(response);
+           var results=document.getElementById("results");
+           for(var index=0; index<response.data.length;index++){
+                var div=createResultNode(response.data[index]);
+                ressults.appendChild(div);
+           }
+           
+        }
+    });
+}
+
+talkToMakan();
+</script>
+
+
+
+</body>
+</html>

@@ -1,14 +1,7 @@
-.property-container {
-    position: fixed;
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: red;
-
-    z-index: 5;
-
-    /*display: none;*/
+.resultNode{
+	border-radius: 7px;
+	 border: 1px solid black;
+	 margin: 5px;
+	 padding:2px;
+	 z-index: 10;
 }
