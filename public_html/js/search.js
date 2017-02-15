@@ -231,7 +231,7 @@
     }
 
     //for success rate tab
-    var projectName=(resultDataArray[0].imageName.split('.'))[0];
+    var projectName=((resultDataArray[0].imageName.split('.'))[0]).split('_')[0];
     var tempBoolean=false;
     //checking only top 5 results.
     for(var tempIndex=0; tempIndex < resultDataArray.length && tempIndex<5; tempIndex++){

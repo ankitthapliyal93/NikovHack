@@ -34,21 +34,22 @@ $(document).ready(function(){
 		var imgList=["aangan.jpg","amantra.jpg","anmol fortune.jpg","atmosphere.jpg","bannerghatta.jpg","beveldere.jpg","blossom.jpg","daffodil.jpg","devanahalli.jpg",
 					"gaur.jpg","godrej 101.jpg","godrej prana.jpg","godrej sky.jpg","greenarch.jpg","hill town.jpg","hyde park.jpg",
 					"manorath.jpg","manorial.jpg","mantra.jpg","meridian.jpg","mirabella.jpg",
-					"myra.jpg","one33.jpg","palm hills.jpg","platino.jpg","romano.jpg","Romano.jpg","royal city.jpg",
-					"royal court.jpg","shantigram.jpg","Shantigram.jpg","sports city.jpg","springview heights.jpg","supernova.jpg","Supernova.jpg","tranquility.png",
+					"myra.jpg","one33.jpg","palm hills.jpg","platino.jpg","romano_1.jpg","romano_2.jpg","royal city.jpg",
+					"royal court.jpg","shantigram_1.jpg","shantigram_2.jpg","sports city.jpg","springview heights.jpg","supernova_1.jpg","supernova_2.jpg","tranquility.png",
 					"twin tower.jpg","wind park.jpg","park city.jpeg","gundecha.jpg","green.jpg","unitech.jpg","white city.jpg","krish city.jpg","ruksun.jpg",
-					"golf homes.jpg","prakriti.jpg","antilia.jpg"]; 
+					"golf homes.jpg","prakriti.jpg","antilia.jpg","gateway.jpg","collina.jpg","garden city.jpg","unnati.jpg","neemrana grace.jpg","golf village.jpg",
+					"grand arch.png","greens.png","magnificia.png","cosmopolis.jpg","sky.jpg","dlf hyde park.png"]; 
 
 
-		//var imgList=["amantra.jpg","anmol fortune.jpg","atmosphere.jpg","beveldere.jpg","blossom.jpg","daffodil.jpg","gaur.jpg","greenarch.jpg","manorath.jpg","meridian.jpg","platino.jpg","romano.jpg","Romano.jpg","royal city.jpg","royal court.jpg","Shantigram.jpg","supernova.jpg","Supernova.jpg","tranquility.png"];
+		//var imgList=["amantra.jpg","anmol fortune.jpg","atmosphere.jpg","beveldere.jpg","blossom.jpg","daffodil.jpg","gaur.jpg","greenarch.jpg","manorath.jpg","meridian.jpg","platino.jpg","romano_1.jpg","romano_2.jpg","royal city.jpg","royal court.jpg","shantigram_1.jpg","supernova_1.jpg","supernova_2.jpg","tranquility.png"];
 
 
 		//var imgList=["park city.jpeg","gundecha.jpg","green.jpg","unitech.jpg","white city.jpg","krish city.jpg","ruksun.jpg",
 		//			"golf homes.jpg","prakriti.jpg","antilia.jpg"];
 
 
-		/*var imgList=["gateway.jpg","collina.jpg","gardencity.jpg","unnati.jpg","neemrana grace.jpg","golf village.jpg",
-					"grand arch.png","greens.png","magnificia.png","cosmopolis.jpg","sky.jpg","dlf hyde park.png"]*/
+	//	var imgList=["gateway.jpg","collina.jpg","garden city.jpg","unnati.jpg","neemrana grace.jpg","golf village.jpg",
+	//				"grand arch.png","greens.png","magnificia.png","cosmopolis.jpg","sky.jpg","dlf hyde park.png"]
 
 
 	 	$('#tableContent').html(""); 
