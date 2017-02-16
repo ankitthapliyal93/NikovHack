@@ -2,12 +2,20 @@
     font-family: "Comfortaa Regular";
     src: url(../fonts/Comfortaa-Regular.ttf);
 }
+@font-face {
+    font-family: "Comfortaa Light";
+    src: url(../fonts/Comfortaa-Light.ttf);
+}
 
- * {
+* {
     margin: 0;
     padding: 0;
     font: inherit;
     box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    text-decoration: none;
 }
 
 html, body {
@@ -16,6 +24,7 @@ html, body {
 }
 
 body {
+    color: #555;
     font-family: "Comfortaa Regular", arial, sans-serif;
     background-color: #ea9f34;
 }
@@ -30,7 +39,7 @@ body {
 h1 {
     padding: 15px 0;
     height: 50px;
-    background-color: #fff;
+    background-color: #f7f7f7;
     text-align: center;
 }
 
@@ -69,8 +78,6 @@ h1 {
 .camera-result {
     width: 100%;
     height: 100%;
-
-
 }
 
 .camera-data-button {

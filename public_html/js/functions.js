@@ -39,6 +39,5 @@ function loadDetails(data) {
     $("#property .property-basics .title").html(data[0].resObject.builderName + " " + data[0].resObject.entityName);
     $("#property .property-basics .entity").html("Makaan ID: " + data[0].resObject.projectId);
     $("#property .property-basics .address").html(data[0].resObject.displayText);
-
     $("#property").fadeIn(200);
 }
