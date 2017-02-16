@@ -185,7 +185,10 @@
             talkToMakan(searchString,0,resultDataArray,builderName,builderIndex+1,imgpath)
           }
           else{   //In the end Display Results.
-           displayResult(resultDataArray);
+            if(imgpath=="")
+              loadDetails(resultDataArray);
+            else
+              displayResult(resultDataArray);
 
           }
         },  //End of success Function.

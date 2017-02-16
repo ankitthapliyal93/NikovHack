@@ -15,6 +15,7 @@
 		<script src="js/capture.js"></script>
 		<script src="js/sanitize.js"></script>
 		<script src="js/search.js"></script>
+		<script src="js/functions.js"></script>
 		<script src="js/forTest.js"></script>
 		<script src="https://apis.google.com/js/api.js"></script>
 	</head>
@@ -101,7 +102,89 @@
 									<span class="title">Gym</span>
 								</div>
 							</div>
-				        
+						</div>
+
+						<div class="tab" id="tab2">
+							<h1>
+								<!-- <span class="header-link left detail" onclick="switchToTab(1)"></span> -->
+								<span class="header-link left back" onclick="switchToTab(1)"></span>
+								A Glimpse
+								<!-- <span class="header-link right neighbourhood" onclick="switchToTab(3)"></span> -->
+								<span class="header-link right forward" onclick="switchToTab(3)"></span>
+							</h1>
+
+							<div class="video-wrapper">
+								<div class="play"></div>
+							</div>
+
+							<div class="gallery-wrapper">
+								<div class="gallery-left">
+									<span class="label">Lush Interiors</span>
+								</div>
+								<div class="gallery-right">
+									<span class="label">Scenic Views</span>
+								</div>
+							</div>
+
+							<div class="viewer-wrapper"></div>
+						</div>
+
+						<div class="tab" id="tab3">
+							<h1>
+								<!-- <span class="header-link left glimpse" onclick="switchToTab(2)"></span> -->
+								<span class="header-link left back" onclick="switchToTab(2)"></span>
+								Neighbourhood
+								<!-- <span class="header-link right call" onclick="openModal('contact-input-wrapper')"></span> -->
+								<span class="header-link right forward" onclick="openModal('contact-input-wrapper')"></span>
+							</h1>
+
+							<div class="container google-maps-wrapper">
+								<iframe class="google-maps" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d27344.800069728262!2d77.04249327319971!3d28.44606157341231!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1472872821214"
+								frameborder="0" style="border:0" allowfullscreen></iframe>
+							</div>
+						</div>
+
+						<div class="tab contact-input" id="contact-input-wrapper">
+							<h1>
+								<span class="header-link left back" onclick="closeModal('contact-input-wrapper')"></span>
+								Get Callback
+							</h1>
+
+							<div class="container contact-bg">
+								<div class="contact-input-wrapper">
+									<input type="number" class="input" placeholder="Enter Contact Number" autofocus>
+									<input type="submit" class="submit" value="Get Callback" onclick="submitNumber()">
+								</div>
+
+								<div class="contact-input-wrapper contact-response">
+									Thanks for sharing your number<br>
+									We will contact you shortly
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-controller-wrapper">
+							<span class="filled"></span>
+							<span></span>
+							<span></span>
+						</div>
+
+						<div class="mock-contact-wrapper" onclick="openModal('contact-input-wrapper')">
+							<div class="input">Enter Contact Number</div>
+							<div class="submit">Get Callback</div>
+						</div>
+					</div>
+
+					<div class="property-container error">
+						<div class="tab">
+							<h1></h1>
+
+							<div class="container">
+								<div class="text" onclick="window.location.reload()">Try Again</div>
+							</div>
+						</div>
+					</div>
+
 			     </div>
 
 			     <div class="tab-pane fade" id="imageTry">

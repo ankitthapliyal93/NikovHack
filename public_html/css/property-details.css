@@ -46,22 +46,22 @@
     right: 15px;
 }
 .property-container h1 .header-link.detail {
-    background-image: url('../images/detail icon.png');
+    background-image: url('../img/detail icon.png');
 }
 .property-container h1 .header-link.glimpse {
-    background-image: url('../images/image icon.png');
+    background-image: url('../img/image icon.png');
 }
 .property-container h1 .header-link.neighbourhood {
-    background-image: url('../images/neighborhood icon.png');
+    background-image: url('../img/neighborhood icon.png');
 }
 .property-container h1 .header-link.call {
-    background-image: url('../images/call icon-black.png');
+    background-image: url('../img/call icon-black.png');
 }
 .property-container h1 .header-link.back {
-    background-image: url('../images/left arrow.png');
+    background-image: url('../img/left arrow.png');
 }
 .property-container h1 .header-link.forward {
-    background-image: url('../images/right arrow.png');
+    background-image: url('../img/right arrow.png');
 }
 
 .tab {
@@ -83,7 +83,7 @@
     height: 160px;
 
     color: #fff;
-    background: url('../images/blurred background top.png') no-repeat center;
+    background: url('../img/blurred background top.png') no-repeat center;
     background-size: cover;
 }
 
@@ -114,7 +114,7 @@
     margin-right: 30px;
     width: 75px;
     height: 100%;
-    background: url('../images/tag icon.png') no-repeat center -10px;
+    background: url('../img/tag icon.png') no-repeat center -10px;
     background-size: contain;
 
     float: right;
@@ -141,7 +141,7 @@
     width: 100%;
     height: calc(100% - 210px);
 
-    background: url('../images/blurred background bottom.png') no-repeat center;
+    background: url('../img/blurred background bottom.png') no-repeat center;
     background-size: cover;
 
     float: left;
@@ -188,12 +188,12 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
-.amenity-wrapper span.icon.security { background-image: url(../images/cctv.png); }
-.amenity-wrapper span.icon.cafe { background-image: url(../images/cafe.png); }
-.amenity-wrapper span.icon.parking { background-image: url(../images/parking.png); }
-.amenity-wrapper span.icon.clubhouse { background-image: url('../images/club house.png'); }
-.amenity-wrapper span.icon.stores { background-image: url(../images/stores.png); }
-.amenity-wrapper span.icon.gym { background-image: url(../images/gym.png); }
+.amenity-wrapper span.icon.security { background-image: url(../img/cctv.png); }
+.amenity-wrapper span.icon.cafe { background-image: url(../img/cafe.png); }
+.amenity-wrapper span.icon.parking { background-image: url(../img/parking.png); }
+.amenity-wrapper span.icon.clubhouse { background-image: url('../img/club house.png'); }
+.amenity-wrapper span.icon.stores { background-image: url(../img/stores.png); }
+.amenity-wrapper span.icon.gym { background-image: url(../img/gym.png); }
 
 .amenity-wrapper span.title {
     padding-top: 5px;
@@ -214,14 +214,14 @@
     width: 100%;
     height: calc(45% - 50px);
 
-    background: #444 url(../images/video-bg.jpg) no-repeat center;
+    background: #444 url(../img/video-bg.jpg) no-repeat center;
     background-size: cover;
 }
 
 .video-wrapper .play {
     width: 100%;
     height: 100%;
-    background: url('../images/play button.png') no-repeat center;
+    background: url('../img/play button.png') no-repeat center;
     background-size: 40px;
 }
 
@@ -240,7 +240,7 @@
     width: 50%;
     height: 100%;
 
-    background: #fff url(../images/interiors.jpg) no-repeat center;
+    background: #fff url(../img/interiors.jpg) no-repeat center;
     background-size: cover;
 
     border-right: 2px solid #eee;
@@ -252,7 +252,7 @@
     width: 50%;
     height: 100%;
 
-    background: #fff url(../images/views.jpg) no-repeat center;
+    background: #fff url(../img/views.jpg) no-repeat center;
     background-size: cover;
 
     float: left;
@@ -274,7 +274,7 @@
     width: 100%;
     height: 27%;
 
-    background: #444 url(../images/floorplan.png) no-repeat center;
+    background: #444 url(../img/floorplan.png) no-repeat center;
     background-size: contain;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .container.contact-bg {
-    background: url('../images/contact page bg.png') no-repeat center bottom;
+    background: url('../img/contact page bg.png') no-repeat center bottom;
     background-size: cover;
 }
 
@@ -324,7 +324,7 @@
 
     color: #ea9f34;
     line-height: 48px;
-    background: #fff url('../images/call icon-orange.png') no-repeat 15px 16px;
+    background: #fff url('../img/call icon-orange.png') no-repeat 15px 16px;
     background-size: 18px;
 
     float: left;
@@ -370,15 +370,15 @@
     width: 10px;
     height: 10px;
 
-    background-image: url('../images/nav circle hollow.png');
+    background-image: url('../img/nav circle hollow.png');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
 
     display: inline-block;
 }
-.tab-controller-wrapper span.filled { background-image: url('../images/nav circle filled.png') }
-/*.tab-controller-wrapper span.empty { background-image: url('../images/nav circle hollow.png') }*/
+.tab-controller-wrapper span.filled { background-image: url('../img/nav circle filled.png') }
+/*.tab-controller-wrapper span.empty { background-image: url('../img/nav circle hollow.png') }*/
 
 
 /* Clickable area at bottom of screen which opens contact number modal */
@@ -400,7 +400,7 @@
 
     color: #ea9f34;
     line-height: 48px;
-    background: url('../images/call icon-orange.png') no-repeat 15px 16px;
+    background: url('../img/call icon-orange.png') no-repeat 15px 16px;
     background-size: 18px;
 
     float: left;
