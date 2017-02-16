@@ -119,6 +119,9 @@
           console.log(builderName);
           talkToMakan(searchString,0,resultDataArray,builderName,0,imgpath);
         }
+      },//end of success
+      error: function(xhr, status,errorThrown){
+          alert("Could not connect to the API"); //Code to handle if could not connect to API.
       }
     });
 
@@ -185,7 +188,10 @@
            displayResult(resultDataArray);
 
           }
-        }   //End of success Function.
+        },  //End of success Function.
+        error: function(xhr, status,errorThrown){
+          alert("Could not connect to the Server");
+        }
      });    //End of Ajax Call.
   }   //End of function.
 

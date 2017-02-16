@@ -1,7 +1,444 @@
-.resultNode{
-	border-radius: 7px;
-	 border: 1px solid black;
-	 margin: 5px;
-	 padding:2px;
-	 z-index: 10;
+.loading-screen {
+    position: fixed;
+    left: 20%;
+    top: 45%;
+
+    padding: 5px 0;
+    width: 60%;
+
+    color: #fff;
+    text-align: center;
+    background-color: #555;
+
+    z-index: +3;
+    display: none;
+}
+
+.property-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 5;
+
+    display: none;
+}
+
+.property-container h1 .header-link {
+    position: absolute;
+    top: 15px;
+    width: 35px;
+    height: 20px;
+
+    /*background-color: blue;*/
+    background-size: 8px;
+    background-repeat: no-repeat;
+}
+.property-container h1 .header-link.left {
+    background-position: left center;
+    left: 15px;
+}
+.property-container h1 .header-link.right {
+    background-position: right center;
+    right: 15px;
+}
+.property-container h1 .header-link.detail {
+    background-image: url('../images/detail icon.png');
+}
+.property-container h1 .header-link.glimpse {
+    background-image: url('../images/image icon.png');
+}
+.property-container h1 .header-link.neighbourhood {
+    background-image: url('../images/neighborhood icon.png');
+}
+.property-container h1 .header-link.call {
+    background-image: url('../images/call icon-black.png');
+}
+.property-container h1 .header-link.back {
+    background-image: url('../images/left arrow.png');
+}
+.property-container h1 .header-link.forward {
+    background-image: url('../images/right arrow.png');
+}
+
+.tab {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+#tab2, #tab3 {
+    display: none;
+}
+
+
+/* Tab #1 */
+
+.splash-container {
+    width: 100%;
+    height: 160px;
+
+    color: #fff;
+    background: url('../images/blurred background top.png') no-repeat center;
+    background-size: cover;
+}
+
+.property-basics {
+    padding: 30px;
+    width: 200px;
+    height: 100%;
+
+    font-family: "Comfortaa Light";
+    float: left;
+}
+
+.property-basics>.detail {
+    font-size: 0.85em;
+    line-height: 2em;
+
+    display: block;
+}
+.property-basics>.detail.title {
+    margin-bottom: 5px;
+
+    font-size: 1.1em;
+    line-height: 1.2em;
+}
+
+.property-price-tag {
+    position: relative;
+    margin-right: 30px;
+    width: 75px;
+    height: 100%;
+    background: url('../images/tag icon.png') no-repeat center -10px;
+    background-size: contain;
+
+    float: right;
+}
+
+.property-price {
+    position: absolute;
+    bottom: 45px;
+    width: 100%;
+
+    color: #ea9f34;
+    text-align: center;
+}
+.property-price>.price {
+    font-size: 1.3em;
+    line-height: 0.25em;
+}
+.property-price>.text {
+    font-size: 0.8em;
+    line-height: 0.25em;
+}
+
+.amenities-container {
+    width: 100%;
+    height: calc(100% - 210px);
+
+    background: url('../images/blurred background bottom.png') no-repeat center;
+    background-size: cover;
+
+    float: left;
+}
+
+.amenities-container h2 {
+    padding: 10px 0;
+    width: 100%;
+    height: 40px;
+
+    font-size: 0.925em;
+    text-align: center;
+    text-transform: lowercase;
+
+    float: left;
+}
+
+.amenity-wrapper {
+    padding: 10px 0;
+    width: 50%;
+    height: 75px;
+
+    font-size: 0.85em;
+    text-transform: lowercase;
+
+    float: left;
+}
+.amenity-wrapper:nth-of-type(2n+1) { padding-left: 30px; }
+.amenity-wrapper:nth-of-type(2n) { padding-right: 30px; }
+
+.amenity-wrapper span {
+    width: 100%;
+    height: 50px;
+
+    text-align: center;
+
+    display: block;
+    float: left;
+}
+
+.amenity-wrapper span.icon {
+    height: 65%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.amenity-wrapper span.icon.security { background-image: url(../images/cctv.png); }
+.amenity-wrapper span.icon.cafe { background-image: url(../images/cafe.png); }
+.amenity-wrapper span.icon.parking { background-image: url(../images/parking.png); }
+.amenity-wrapper span.icon.clubhouse { background-image: url('../images/club house.png'); }
+.amenity-wrapper span.icon.stores { background-image: url(../images/stores.png); }
+.amenity-wrapper span.icon.gym { background-image: url(../images/gym.png); }
+
+.amenity-wrapper span.title {
+    padding-top: 5px;
+    height: 35%;
+}
+
+
+.container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+
+/* Tab #2 */
+
+.video-wrapper {
+    width: 100%;
+    height: calc(45% - 50px);
+
+    background: #444 url(../images/video-bg.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.video-wrapper .play {
+    width: 100%;
+    height: 100%;
+    background: url('../images/play button.png') no-repeat center;
+    background-size: 40px;
+}
+
+.gallery-wrapper {
+    width: 100%;
+    height: 28%;
+
+    background-color: #555;
+
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+}
+
+.gallery-wrapper .gallery-left {
+    position: relative;
+    width: 50%;
+    height: 100%;
+
+    background: #fff url(../images/interiors.jpg) no-repeat center;
+    background-size: cover;
+
+    border-right: 2px solid #eee;
+    float: left;
+}
+
+.gallery-wrapper .gallery-right {
+    position: relative;
+    width: 50%;
+    height: 100%;
+
+    background: #fff url(../images/views.jpg) no-repeat center;
+    background-size: cover;
+
+    float: left;
+}
+
+.gallery-wrapper .label {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    padding: 8px;
+
+    color: #fff;
+    font-size: 0.8em;
+    /*text-transform: uppercase;*/
+    background-color: #ea9f34;
+}
+
+.viewer-wrapper {
+    width: 100%;
+    height: 27%;
+
+    background: #444 url(../images/floorplan.png) no-repeat center;
+    background-size: contain;
+}
+
+
+/* Tab #3 */
+
+.container.google-maps-wrapper {
+    background-color: #eee;
+}
+
+.google-maps {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Contact input modal screen */
+
+.tab.contact-input {
+    height: 100%;
+    z-index: 9;
+
+    display: none;
+}
+
+.container.contact-bg {
+    background: url('../images/contact page bg.png') no-repeat center bottom;
+    background-size: cover;
+}
+
+.contact-input-wrapper {
+    position: absolute;
+    left: 20px;
+    bottom: 50%;
+    width: calc(100% - 40px);
+    height: 50px;
+
+    font-size: 0.8em;
+
+    border: 1px solid #ea9f34;
+}
+
+.contact-input-wrapper .input {
+    padding-left: 45px;
+    width: calc(100% - 110px);
+    height: 100%;
+
+    color: #ea9f34;
+    line-height: 48px;
+    background: #fff url('../images/call icon-orange.png') no-repeat 15px 16px;
+    background-size: 18px;
+
+    float: left;
+}
+.contact-input-wrapper .submit {
+    width: 110px;
+    height: 100%;
+
+    color: #fff;
+    line-height: 48px;
+    text-align: center;
+
+    background-color: #ea9f34;
+    float: left;
+}
+
+.contact-input-wrapper.contact-response {
+    color: #ea9f34;
+    font-size: 1em;
+    line-height: 1.75em;
+    text-align: center;
+
+    border: none;
+    display: none;
+}
+
+
+/* Swipe between tabs */
+
+.tab-controller-wrapper {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+
+    width: 100%;
+    height: 15px;
+
+    text-align: center;
+}
+
+.tab-controller-wrapper span {
+    padding: 0 7px;
+    width: 10px;
+    height: 10px;
+
+    background-image: url('../images/nav circle hollow.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    display: inline-block;
+}
+.tab-controller-wrapper span.filled { background-image: url('../images/nav circle filled.png') }
+/*.tab-controller-wrapper span.empty { background-image: url('../images/nav circle hollow.png') }*/
+
+
+/* Clickable area at bottom of screen which opens contact number modal */
+
+.mock-contact-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+
+    font-size: 0.9em;
+    background-color: #fff;
+    border: 1px solid #ea9f34;
+}
+.mock-contact-wrapper .input {
+    padding-left: 45px;
+    width: calc(100% - 120px);
+    height: 100%;
+
+    color: #ea9f34;
+    line-height: 48px;
+    background: url('../images/call icon-orange.png') no-repeat 15px 16px;
+    background-size: 18px;
+
+    float: left;
+}
+.mock-contact-wrapper .submit {
+    width: 120px;
+    height: 100%;
+
+    color: #fff;
+    line-height: 48px;
+    text-align: center;
+
+    background-color: #ea9f34;
+    float: left;
+}
+
+
+/* Error modal */
+
+.error {
+    background-color: #444;
+    z-index: +11;
+    display: none;
+}
+
+.error .tab {
+    height: 100%;
+}
+
+.error .tab .text {
+    position: absolute;
+    left: 20%;
+    bottom: 50%;
+
+    padding: 10px 0;
+    width: 60%;
+
+    color: #fff;
+    text-align: center;
+    background-color: #ea9f34;
 }

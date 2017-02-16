@@ -34,7 +34,8 @@ function makeRequest(trial,imgpath) {
 //code to be deleted after testing
 var photo1=document.getElementById('photo');
 var canvas = document.getElementById('canvas');
- photo.setAttribute('src', trial);
+if(trial!="")
+  photo.setAttribute('src', trial);
 
 
 
@@ -47,7 +48,7 @@ var canvas = document.getElementById('canvas');
         {
           "image":
           {
-            "content": $('#photo').attr('src').replace("data:image/png;base64,", "")
+            "content": $('#photo').attr('src').replace(/data:image\/.*;base64,/, "")
              
           },
           "features":
@@ -63,6 +64,7 @@ var canvas = document.getElementById('canvas');
     request.then(function(response) {
         sanitize(response,imgpath);
         }, function(reason) {
+        	//Code to display error to be introduced here.
             console.log('Error: ' + reason.result.error.message);
         }
     );
@@ -75,7 +77,7 @@ var canvas = document.getElementById('canvas');
 
 function hitAPI(imgpath) { 
 
-     var trial;
+     var trial="";
      gapi.load('client',function(){
               
               /*  gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');
@@ -91,7 +93,7 @@ function hitAPI(imgpath) {
              console.log("Here I am");
              trial=trial.replace("data:image/jpeg;base64,", "data:image/png;base64,");
 
-          }else{
+          }else if(typeof imgpath=="string"){
          
           toDataUrl('img/'+imgpath, function(base64Img) {
                 //trial_run=base64Img;
@@ -99,8 +101,8 @@ function hitAPI(imgpath) {
          });
         }
 
-           gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');
-                gapi.client.load('vision').then(function(){makeRequest(trial,imgpath)});
+        gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');
+        gapi.client.load('vision').then(function(){makeRequest(trial,imgpath)});
 
 
 

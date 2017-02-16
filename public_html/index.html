@@ -32,24 +32,75 @@
 			<div class="tab-content">
 				<div class="tab-pane fade in active" id="mainIdea">
 					 	
-					 	 <div class="camera">
-				            <h1>Take photo</h1>
-							<video class="camera-view" id="video">Video stream not available.</video>
-							<button class="camera-capture-button" id="startbutton"></button>
-						</div>
+					<div class="camera">
+			            <h1>Take photo</h1>
+						<video class="camera-view" id="video">Video stream not available.</video>
+						<button class="camera-capture-button" id="startbutton"></button>
+					</div>
 
-			        	<div class="camera-result-wrapper">
-				    		<canvas class="camera-result" id="canvas"></canvas>
+			        <div class="camera-result-wrapper">
+			    		<canvas class="camera-result" id="canvas"></canvas>
 
-				            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
-				            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
+			            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
+			            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
 
-				    		<div class="output">
-				    			<img id="photo" alt="The screen capture will appear in this box.">
-				    		</div>
-				    		<div id="propResults"></div>
-				        </div>
-				        
+			    		<div class="output">
+			    			<img id="photo" alt="The screen capture will appear in this box.">
+			    		</div>
+			        </div>
+
+					<div class="loading-screen">Loading...</div>
+
+					<div class="property-container" id="property">
+						<div class="tab" id="tab1">
+							<h1>
+								Property Details
+								<!-- <span class="header-link right glimpse" onclick="switchToTab(2)"></span> -->
+								<span class="header-link right forward" onclick="switchToTab(2)"></span>
+							</h1>
+
+							<div class="splash-container">
+								<div class="property-basics">
+									<span class="title detail">Ireo SFVictory</span>
+									<span class="detail entity">Entity ID: 31291</span>
+									<span class="detail address">Sector 49, Gurgaon</span>
+								</div>
+
+								<div class="property-price-tag">
+									<div class="property-price">
+										<span class="price">29.5l</span>
+										<span class="text">onwards</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="amenities-container">
+								<h2>Amenities</h2>
+								<div class="amenity-wrapper">
+									<span class="icon security"></span>
+									<span class="title">Security</span>
+								</div>
+								<div class="amenity-wrapper">
+									<span class="icon cafe"></span>
+									<span class="title">Cafe</span>
+								</div>
+								<div class="amenity-wrapper">
+									<span class="icon parking"></span>
+									<span class="title">Parking</span>
+								</div>
+								<div class="amenity-wrapper">
+									<span class="icon clubhouse"></span>
+									<span class="title">Club House</span>
+								</div>
+								<div class="amenity-wrapper">
+									<span class="icon stores"></span>
+									<span class="title">Stores</span>
+								</div>
+								<div class="amenity-wrapper">
+									<span class="icon gym"></span>
+									<span class="title">Gym</span>
+								</div>
+							</div>
 				        
 			     </div>
 

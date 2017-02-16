@@ -22,9 +22,7 @@ $(document).ready(function(){
 
 		if (file) {
 				reader.readAsDataURL(file); //reads the data as a URL
-		}
-	    
-
+		}	    
 	});
 
 	//For starting the testing Process.
