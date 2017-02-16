@@ -33,6 +33,10 @@
     console.log("Here I am :"+searchString[arrayIndex].strText+" "+arrayIndex);
     var query=searchString[arrayIndex].strText;
     if(searchString[arrayIndex].strText.indexOf("%")>=0) query="";   //Invalid search string.
+    //A logic can be created here to sanitize the query string itself.
+    //query=query.toLowerCase().replace('the','');
+    //searchString[arrayIndex].strText=query;
+    //console.log(query+" GGGGGGG");
     
     var url = "https://www.makaan.com/columbus/app/v6/typeahead?query="+query+"&typeAheadType=BUILDER&city=&usercity=&rows=5&enhance=gp&category=buy&view=buyer&sourceDomain=Makaan&format=json";
     var data = {};
@@ -85,7 +89,7 @@
                   console.log("hey2 "+response.data[index].builderName);
                 }
               }
-            }
+            }// End of if builder name exists
 
 
                     /* var temp=arrayIndex;

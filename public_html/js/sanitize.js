@@ -45,7 +45,7 @@ function sanitize (data,imgpath) {
 
       sanitizedText.push(textObj);
     }
-
+    	console.log(sanitizedText[0].m_strText); 
         refineText(sanitizedText,imgpath);   //call to refine the sanitized text.     
 
       }
