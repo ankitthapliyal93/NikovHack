@@ -105,11 +105,6 @@ function hitAPI(imgpath) {
         gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');
         gapi.client.load('vision').then(function(){makeRequest(trial,imgpath)});
 
-
-
-
-
-
          }
     );
 

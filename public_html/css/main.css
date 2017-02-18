@@ -50,7 +50,7 @@ h1 {
 }
 
 .camera-capture-button {
-    position: fixed;
+    position: relative;
     bottom: 50px;
     left: calc(50% - 30px);
 
