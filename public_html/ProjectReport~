@@ -1,0 +1,73 @@
+
+
+Name of the Product: makaanCam
+Vision: To provide platform for its users to access the projects List and details where the method of input can be in following ways:
+	1. Photos
+		a. Using camera clicked Photos
+		b. Using already stored Photos
+	2. Audio
+	3. Using GPS
+
+
+Process Followed:
+
+######## INPUT THROUGH PHOTOS ########
+
+1. Started Working on Google Vision API- Google Cloud Vision API enables developers to understand the content of an image by encapsulating powerful machine learning models in an easy to use REST API.
+
+2. One of the tools of this API is OCR -Optical Character Recognition. It extracts the text from the image supplied to it.
+
+	**Challenges encountered in using OCR text:
+
+		* OCR text was not detected correctly(spelling mistake).
+		* OCR detects text line by line. Unable to figure out if logically text was written vertically.
+		* Amount of additional text in response was too high.
+		* OCR could not detect Text with special formatting.
+	
+	**Solution applied to solve above issues:
+		* Logic was designed to discover logical structures of texts within the image content: It finds the closest horizontal and
+		  vertical words among the set of remaining words. Then using various checks of heights, alignment it decided weatherto club
+ 		  the words together or use them individually.
+		* The Height was used as a factor to sort the list of strings that were formed assuming that the builder name or the project
+		  name will have a greater font size then the rest of the text.
+		* Formation of logical structures let to the significant reduction in the no of strings to search and thus resulting
+		  in less false results from non useful strings.
+		* All texts that were of size less than 2 and greater than 20 were removed from the list.
+		* Special cases were redundancy in test cases was introduced to ensure that we dont miss on useful data.
+		
+3. Applying the above solutions properly in the programming logic with additional checks simple OCR detection was able to give a 81% success rate(80 images were considered)         
+
+
+Reasons for FAILURE with OCR:
+	* OCR was unable to detect specialized fonts.
+	* Since OCR detected misspelled words, search results on makaan was not useful. eg: DLF was given as DLFA which resulted nothing in
+	  makaan API.
+	* Images containing only logos was not successfully detected by our algo.
+	* Extra Texts was resulting into better search results.
+
+
+
+***** Moving to Logo Detection *****
+
+As we can see from the reason of failures, the major chunk of the issue was because of stylish fonts and logos. So we moved to an approach to help over OCR layer to further improve the results ---LOGO DETECTION. For this we researched about 3 technologies:
+
+1. Clarifai API - This API lets you train your own model and enable you to make request to classify the datapoint according to your own model. Created a basic model through this, success rate was very low for this (Possibly because training set was not large). Primary disadvantae for this API was that it was paid.
+
+2.Tensorflow - (Inception V3)- This model provides the Deep Convolutional Neural Network machine learning algorithm for classification of images. You can work over the already trained model -Inception V3(trained by Google). You need to retrain the model by retraining only the last layer of the model; a technique called as Transfer Learning. Trained the model on few set of builders(with 120 images in each). Validation Accuracy was 83.3%. 
+
+
+3.Google Vision Logo Detection - This API provides you the results on google already trained models. 
+	ADVANTAGE: It could be coupled with the OCR request, so saves one API request.
+	DISADVANTAGE: It is not trained specifically for our project. It is a general model. It gives results according to how it is
+		      trained. For eg: DLF --> IPL, Saviour ---> Saviour Greenarch. 
+
+
+Finally, decided on using the Google Vision Logo Detection method, which improved our suceess rate significantly to 90%.
+
+
+Next on agenda: Developing a Feedback mechanism for our users, so that we can learn from the real world data.     
+
+   
+
+
+ 
