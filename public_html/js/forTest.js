@@ -29,7 +29,7 @@ $(document).ready(function(){
 	$("#startProcess").click(function() {
 		//var imgList=["godrej prana.jpg","aangan.jpg","godrej sky.jpg","hill town.jpg","shantigram.jpg","sports city.jpg","springview heights.jpg","twin tower.jpg","godrej 101.jpg","greenarch.jpg","bannerghatta.jpg","devanahalli.jpg","myra.jpg","one33.jpg","hyde park.jpg","wind park.jpg","palm hills.jpg","manorial.jpg","mirabella.jpg","mantra.jpg"];
 	 
-	var imgList=["aangan.jpg","amantra.jpg","anmol fortune.jpg","atmosphere.jpg","bannerghatta.jpg","beveldere.jpg","blossom.jpg","daffodil.jpg","devanahalli.jpg",
+	var imgList=["aangan.jpg","amantra.jpg","anmol fortune.jpg","atmosphere.jpg","bannerghatta.jpg","belvedere.jpg","blossom.jpg","daffodil.jpg","devanahalli.jpg",
 					"gaur.jpg","godrej 101.jpg","godrej prana.jpg","godrej sky.jpg","greenarch.jpg","hill town.jpg","hyde park.jpg",
 					"manorath.jpg","manorial.jpg","mantra.jpg","meridian.jpg","mirabella.jpg",
 					"myra.jpg","one33.jpg","palm hills.jpg","platino.jpg","romano_1.jpg","romano_2.jpg","royal city.jpg",
@@ -42,7 +42,7 @@ $(document).ready(function(){
 					"victorian county.jpg","botnia.jpg","golf links.jpg","royal.jpg","international city.png"]; 
 
 
-		//var imgList=["amantra.jpg","anmol fortune.jpg","atmosphere.jpg","beveldere.jpg","blossom.jpg","daffodil.jpg","gaur.jpg","greenarch.jpg","manorath.jpg","meridian.jpg","platino.jpg","romano_1.jpg","romano_2.jpg","royal city.jpg","royal court.jpg","shantigram_1.jpg","supernova_1.jpg","supernova_2.jpg","tranquility.png"];
+		//var imgList=["amantra.jpg","anmol fortune.jpg","atmosphere.jpg","belvedere.jpg","blossom.jpg","daffodil.jpg","gaur.jpg","greenarch.jpg","manorath.jpg","meridian.jpg","platino.jpg","romano_1.jpg","romano_2.jpg","royal city.jpg","royal court.jpg","shantigram_1.jpg","supernova_1.jpg","supernova_2.jpg","tranquility.png"];
 
 
 		//var imgList=["park city.jpeg","gundecha.jpg","green.jpg","unitech.jpg","white city.jpg","krish city.jpg","ruksun.jpg",

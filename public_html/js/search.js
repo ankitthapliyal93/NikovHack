@@ -28,7 +28,7 @@
 
 
   //Function is responsible for finding possible builders and insert them into the builderName Array.
-  function findBuilder(searchString,arrayIndex,builderName,imgpath){
+  function findBuilder(searchString,arrayIndex,builderName,imgpath,serverTrial){
 
     console.log("Here I am :"+searchString[arrayIndex].strText+" "+arrayIndex);
     var query=searchString[arrayIndex].strText;
@@ -112,16 +112,24 @@
 
         //Calling the function recusively for other strings as well and at the end calling the talkToMakan function for getting project List.  
         if(/*arrayIndex+1 <=12 &&*/ arrayIndex+1 < searchString.length )
-          findBuilder(searchString,arrayIndex+1,builderName,imgpath);
+          findBuilder(searchString,arrayIndex+1,builderName,imgpath,0);
         else{
           var resultDataArray=[];
           console.log("Builder Name List for :");
           console.log(builderName);
-          talkToMakan(searchString,0,resultDataArray,builderName,0,imgpath);
+          talkToMakan(searchString,0,resultDataArray,builderName,0,imgpath,0);
         }
       },//end of success
       error: function(xhr, status,errorThrown){
-          alert("Could not connect to the API"); //Code to handle if could not connect to API.
+      		if(serverTrial<5)
+      			findBuilder(searchString,arrayIndex,builderName,imgpath,serverTrial+1);
+      		else{
+      			console.log("YYYYYYYYYYYYYYYYYYYYYYYYYY\n\nCould not connect to the API"+errorThrown); //Code to handle if could not connect to API.
+
+      		}
+
+
+          
       }
     });
 
@@ -130,7 +138,7 @@
 
   //Function  is responsible for getting the Project List from the API for given searchString and builder name and store 
   //reults in resultDataArray.
-  function talkToMakan(searchString,arrayIndex,resultDataArray,builderName,builderIndex,imgpath) {
+  function talkToMakan(searchString,arrayIndex,resultDataArray,builderName,builderIndex,imgpath,serverTrial) {
 
     var builder=""; 
     var query=""
@@ -145,7 +153,7 @@
 
       if(builder!= "" && searchString[arrayIndex].strText.toLowerCase().indexOf(builder.toLowerCase())>=0) { query="";}//Because in this case search will be made when builder is empty case.
 
-      var url = "https://www.makaan.com/columbus/app/v6/typeahead?query="+query+"&typeAheadType=PROJECT&city=&usercity=&rows=7&enhance=gp&category=buy&view=buyer&sourceDomain=Makaan&format=json";
+      var url = "https://www.makaan.com/columbus/app/v6/typeahead?query="+query+"&typeAheadType=PROJECT&city=&usercity=&rows=6&enhance=gp&category=buy&view=buyer&sourceDomain=Makaan&format=json";
       var data = {};
       console.log(query);
       
@@ -179,10 +187,10 @@
           }
 
           if((arrayIndex+1 <30 && arrayIndex+1 < searchString.length) ) //Search various strings for a particular builder name.
-            talkToMakan(searchString,arrayIndex+1,resultDataArray,builderName,builderIndex,imgpath);
+            talkToMakan(searchString,arrayIndex+1,resultDataArray,builderName,builderIndex,imgpath,0);
           else if(builderName.length >= builderIndex+1)     //Increment the builder name and proceed as usual.
           {
-            talkToMakan(searchString,0,resultDataArray,builderName,builderIndex+1,imgpath)
+            talkToMakan(searchString,0,resultDataArray,builderName,builderIndex+1,imgpath,0)
           }
           else{   //In the end Display Results.
             if(imgpath=="")
@@ -193,7 +201,11 @@
           }
         },  //End of success Function.
         error: function(xhr, status,errorThrown){
-          alert("Could not connect to the Server");
+        	if(serverTrial<5)
+       		  talkToMakan(searchString,arrayIndex,resultDataArray,builderName,builderIndex,imgpath,serverTrial+1)
+       		else{
+        	  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nCould not connect to the Server: "+errorThrown);
+        	}
         }
      });    //End of Ajax Call.
   }   //End of function.

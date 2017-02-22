@@ -14,7 +14,7 @@ function toDataUrl(src, callback, outputFormat) {
   canvas.height=768;*/
     ctx.drawImage(this, 0, 0);
     dataURL = canvas.toDataURL(outputFormat);
-    
+  
     callback(dataURL);
   };
   img.src = src;
@@ -56,7 +56,10 @@ if(trial!="")
             {
               "maxResults": 100,
               "type": "TEXT_DETECTION"
-            }
+            },
+             {
+          		"type": "LOGO_DETECTION"
+        	}
           ]
         }
       ]
@@ -78,7 +81,7 @@ if(trial!="")
 function hitAPI(imgpath) { 
 
      var trial="";
-     imgpath="";
+     //imgpath="";
      gapi.load('client',function(){
               
               /*  gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');
@@ -87,18 +90,19 @@ function hitAPI(imgpath) {
                 trial=base64Img;
         
           })).then(function(){makeRequest(trial,imgpath)});*/
+   
           
           if(typeof imgpath == "object"){
              trial=imgpath.result;
              imgpath=imgpath.name;
-             console.log("Here I am");
              trial=trial.replace("data:image/jpeg;base64,", "data:image/png;base64,");
 
           }else if(typeof imgpath=="string"){
-         
+           
           toDataUrl('img/'+imgpath, function(base64Img) {
                 //trial_run=base64Img;
                 trial=base64Img;
+                
          });
         }
 

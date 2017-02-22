@@ -29,10 +29,28 @@ function sanitize (data,imgpath) {
   console.log("Data REceived from API: \n");
   console.log(data);
   //console.log(sanitizedText[0].m_strText); 
+  var scannedJson = JSON.parse(data.body);
+
+  console.log(scannedJson.responses[0].logoAnnotations);
   
 
   var sanitizedText = []; 
-  var scannedJson = JSON.parse(data.body);
+  var stringList=[];    //List to maintain the list of strings to be searched
+
+  //Processing the logo Detection part
+  if(scannedJson.responses[0].logoAnnotations){
+    var logoAnnotationsArray = scannedJson.responses[0].logoAnnotations;
+    for(var index = 0; index < logoAnnotationsArray.length; index++){
+      var tempObj = new stringListObject();
+      tempObj.strText=logoAnnotationsArray[index].description;
+      tempObj.font_size=logoAnnotationsArray[index].boundingPoly.vertices[3].y-logoAnnotationsArray[index].boundingPoly.vertices[0].y;
+      stringList.push(tempObj);
+    }
+  }
+
+
+
+  
   if(scannedJson.responses[0].textAnnotations){
     var textAnnotationsArray = scannedJson.responses[0].textAnnotations;
     for(var index = 0; index < textAnnotationsArray.length; index++){
@@ -46,7 +64,10 @@ function sanitize (data,imgpath) {
       sanitizedText.push(textObj);
     }
     	console.log(sanitizedText[0].m_strText); 
-        refineText(sanitizedText,imgpath);   //call to refine the sanitized text.     
+        refineText(sanitizedText,stringList);   //call to refine the sanitized text.
+        var builderName=[];
+    	//Call to findBuilder() function. Arguments include-Array of strings, arrayIndex, array of builders, imgpath. 
+    	findBuilder(stringList,0,builderName,imgpath,0);     
 
       }
       else {
@@ -60,14 +81,16 @@ function sanitize (data,imgpath) {
 //Function tries to construct logical structures of words and create strings that can then be hit on database.
 //It calculates the closest horizontal and vertical words (within range) and then merge them, if they satisfy certain condition. 
 
-function refineText (sanitizedText,imgpath) {  
+function refineText (sanitizedText,stringList) {  
 
-    var stringList=[];    //List to maintain the list of strings to be searched
+    
     var verticalMargin=5;   // Vertical distance between two words
     var horizontalMargin=20;    //Horizontal Distance between two words
     var verticalCloseMargin=10;   //If horizontally placed but with little different vertical placement
     var horizontalCloseMargin=10; //If vertically placed but with little different horizontal placement
-
+    var maxLengthPermitted=20;  //Maximum length of the search string
+    var minLengthPermitted=3;	//Minimum length of the search string
+    var minHeightDiff=10;		//Minimum height difference to push the words individually as well
     
     //Loop Takes strings one by one aand find the closest horizontal and vertical and merge them accordingly.
     //Index 0 contains the entire string, so loop starts with 1. Needs to run only till length-1.
@@ -139,7 +162,7 @@ function refineText (sanitizedText,imgpath) {
 
         //If height Difference is too huge or merging elements are vertically aligned then, we also push them individually.
         //This take care of faulty vertical merging.
-        if(Math.abs(currHeight-nextHeight)>=10 || nextIndex==verticalCloseIndex){ 
+        if(Math.abs(currHeight-nextHeight)>=minHeightDiff || nextIndex==verticalCloseIndex){ 
 
           var stringObject=new stringListObject();
           stringObject.strText=sanitizedText[index].m_strText;
@@ -199,20 +222,29 @@ function refineText (sanitizedText,imgpath) {
     
 
     //Loop deteles all strings that have length  greater than 20 or less than 2.
+    //This also satistizes certain strings like eg: B H I W A D I --> BHIWADI
+    //We  can also create a dictionary of words which cannot be the project or builder names and remove them like --"THE". 
     for(var index=0;index<stringList.length;index++){
-      if(stringList[index].strText.length>20 || stringList[index].strText.length<=2){
+      if(stringList[index].strText.length>maxLengthPermitted || stringList[index].strText.length<minLengthPermitted){
         console.log(stringList[index].strText);
         stringList.splice(index,1);
         index--;
+      }
+      else{
+      	var tempArray=stringList[index].strText.split(" ");
+      	var tempBool=true;		//true: if all are single characters false: even if one is not a single character 
+      	tempArray.forEach(function(value){
+      						if(value.length!=1){
+      								tempBool=false;
+      						}
+      	 });
+      	if(tempBool)		//If all are single characters then merge them.
+      		stringList[index].strText=tempArray.join("");
       }
     }
     
     console.log("\nStringList after Cropping is:\n\n ");
     console.log(stringList);
 
-
-    var builderName=[];
-    //Call to findBuilder() function. Arguments include-Array of strings, arrayIndex, array of builders, imgpath. 
-    findBuilder(stringList,0,builderName,imgpath);
 }
 
