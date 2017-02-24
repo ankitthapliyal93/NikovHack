@@ -95,7 +95,7 @@ function hitAPI(imgpath) {
           if(typeof imgpath == "object"){
              trial=imgpath.result;
              imgpath=imgpath.name;
-             trial=trial.replace("data:image/jpeg;base64,", "data:image/png;base64,");
+             //trial=trial.replace("data:image/jpeg;base64,", "data:image/png;base64,");
 
           }else if(typeof imgpath=="string"){
            

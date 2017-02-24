@@ -1,0 +1,21 @@
+{
+  "name": "Project",
+  "version": "0.0.0",
+  "description": "First Node Project",
+  "main": "mkdir.js",
+  "dependencies": {
+    "express": "3.x",
+    "body-parser": "~1.16.1",
+    "path": "~0.12.7",
+    "fs": "0.0.1-security",
+    "connect-multiparty": "~2.0.0",
+    "mysql": "~2.13.0",
+    "hbs": "~4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ankit",
+  "license": "OWNER"
+}

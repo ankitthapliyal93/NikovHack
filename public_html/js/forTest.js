@@ -3,6 +3,11 @@
 $(document).ready(function(){
 
 	
+	$('#feedback').click(collectFeedback);
+
+
+
+
 	//For files from local host
 	$("#submitImg").click(function() {
 		var img=document.getElementById("imgPath");
@@ -10,13 +15,16 @@ $(document).ready(function(){
 
 	});
 
+
 	//For files from local computer
 	$("#submit").click(function() {
 		
+		//uploadImage ();
 		var file    = document.querySelector('input[type=file]').files[0];
 		var reader  = new FileReader();
 		reader.onloadend = function () {
 						reader.name=file.name;
+						uploadImage(reader);
 						hitAPI(reader);
 						}
 
