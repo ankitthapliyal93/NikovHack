@@ -155,9 +155,6 @@ app.get('/', function(req, res) {
 });
 
 
-
-
-
 //This handles the post request to save the feedback of the user to the database.
 app.post('/feedback',function(req,res){
 	console.log("checking!!");

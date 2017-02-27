@@ -1,5 +1,4 @@
-//var trial_run="";
-//var imgPath="";
+
 function toDataUrl(src, callback, outputFormat) {
   var img = new Image();
   img.crossOrigin = 'Anonymous';

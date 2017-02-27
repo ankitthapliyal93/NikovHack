@@ -1,5 +1,5 @@
 
-  ( function() {
+( function() {
         // The width and height of the captured photo. We will set the
         // width to the value defined here, but the height will be
         // calculated based on the aspect ratio of the input stream.
@@ -136,10 +136,10 @@
   function resetCamera() {
 
       
-      video = document.getElementById('video');
-      canvas = document.getElementById('canvas');
-      photo = document.getElementById('photo');
-      startbutton = document.getElementById('startbutton');
+      var video = document.getElementById('video');
+      var canvas = document.getElementById('canvas');
+      var photo = document.getElementById('photo');
+      var startbutton = document.getElementById('startbutton');
 
       navigator.getMedia = ( navigator.getUserMedia ||
                              navigator.webkitGetUserMedia ||
