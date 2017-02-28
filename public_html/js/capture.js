@@ -4,6 +4,8 @@
         // width to the value defined here, but the height will be
         // calculated based on the aspect ratio of the input stream.
 
+
+       
         var width = 320;    // We will scale the photo width to this
         var height = 0;     // This will be computed based on the input stream
 
@@ -26,8 +28,10 @@
 
 
         function startup() {
+          document.getElementById("defaultOpen").click(); //For default opening of the tab.
+              
               video = document.getElementById('video');
-              canvas = document.getElementById('canvas');
+              canvas = document.createElement('canvas');
               photo = document.getElementById('photo');
               startbutton = document.getElementById('startbutton');
 
@@ -80,6 +84,7 @@
 
                 takepicture();
                 vidOff();
+                $(".camera").hide();
                 $(".camera-result-wrapper").show();
                 ev.preventDefault();
               }, false);
@@ -167,6 +172,7 @@
         }
       ); 
       $(".camera-result-wrapper").hide();
+      $(".camera").show();
   }
 
 

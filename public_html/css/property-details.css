@@ -64,12 +64,13 @@
     background-image: url('../img/right arrow.png');
 }
 
-.tab {
+/*.tab {
     position: fixed;
     top: 0;
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% );
 }
+*/
 
 #tab2, #tab3 {
     display: none;
@@ -200,12 +201,12 @@
     height: 35%;
 }
 
-
+/*
 .container {
     position: relative;
     width: 100%;
-    height: calc(100% - 50px);
-}
+    height: calc(100% );
+}*/
 
 
 /* Tab #2 */

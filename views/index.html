@@ -6,251 +6,89 @@
 		<meta charset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel='stylesheet' href='/css/main.css'>
-		<link rel="stylesheet" type="text/css" href="/css/property-details.css" />
-		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/tabs.css" />
+		<link rel="stylesheet" type="text/css" href="/css/upload.css" />
+		<!--<link rel="stylesheet" type="text/css" href="/css/property-details.css" /> -->
 
         <script src="/js/jquery-3.1.0.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
 		<script src="/js/request.js"></script>
 		<script src="/js/capture.js"></script>
 		<script src="/js/sanitize.js"></script>
 		<script src="/js/search.js"></script>
+		<script src="/js/display.js"></script>
 		<script src="/js/functions.js"></script>
 		<script src="/js/feedback.js"></script>
 		<script src="/js/upload.js"></script>
 		<script src="/js/forTest.js"></script>
+		<script src="/js/tabs.js"></script>
 		<script src="https://apis.google.com/js/api.js"></script>
 	</head>
 
 	<body>
-
-		<div class="container">
-			<h1>Test Product</h1>
-			<ul class="nav nav-tabs nav-justified">
-				  <li role="presentation" class="active"><a href="#mainIdea" data-toggle="tab">Mobile Service</a></li>
-				  <li role="presentation"><a href="#imageTry" data-toggle="tab">Test Image</a></li>
-				  <li role="presentation"><a href="#results" data-toggle="tab">Results</a></li>
-			</ul>
-
-			<div class="tab-content">
-				<div class="tab-pane fade in active" id="mainIdea">
-					 	
-					<div class="camera">
-			            <h1>Take photo</h1>
-						<video class="camera-view" id="video">Video stream not available.</video>
-						<button class="camera-capture-button" id="startbutton"></button>
-					</div>
-
-			        <div class="camera-result-wrapper">
-			    		<canvas class="camera-result" id="canvas"></canvas>
-
-			            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
-			            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
-
-			    		<div class="output">
-			    			<img id="photo" alt="The screen capture will appear in this box.">
-			    		</div>
-			        </div>
-
-					<div class="loading-screen">Loading...</div>
-
-					<div class="property-container" id="property">
-						<div class="tab" id="tab1">
-							<h1>
-								Property Details
-								<!-- <span class="header-link right glimpse" onclick="switchToTab(2)"></span> -->
-								<span class="header-link right forward" onclick="switchToTab(2)"></span>
-							</h1>
-
-							<div class="splash-container">
-								<div class="property-basics">
-									<span class="title detail">Ireo SFVictory</span>
-									<span class="detail entity">Entity ID: 31291</span>
-									<span class="detail address">Sector 49, Gurgaon</span>
-								</div>
-
-								<div class="property-price-tag">
-									<div class="property-price">
-										<span class="price">29.5l</span>
-										<span class="text">onwards</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="amenities-container">
-								<h2>Amenities</h2>
-								<div class="amenity-wrapper">
-									<span class="icon security"></span>
-									<span class="title">Security</span>
-								</div>
-								<div class="amenity-wrapper">
-									<span class="icon cafe"></span>
-									<span class="title">Cafe</span>
-								</div>
-								<div class="amenity-wrapper">
-									<span class="icon parking"></span>
-									<span class="title">Parking</span>
-								</div>
-								<div class="amenity-wrapper">
-									<span class="icon clubhouse"></span>
-									<span class="title">Club House</span>
-								</div>
-								<div class="amenity-wrapper">
-									<span class="icon stores"></span>
-									<span class="title">Stores</span>
-								</div>
-								<div class="amenity-wrapper">
-									<span class="icon gym"></span>
-									<span class="title">Gym</span>
-								</div>
-							</div>
-						</div>
-
-						<div class="tab" id="tab2">
-							<h1>
-								<!-- <span class="header-link left detail" onclick="switchToTab(1)"></span> -->
-								<span class="header-link left back" onclick="switchToTab(1)"></span>
-								A Glimpse
-								<!-- <span class="header-link right neighbourhood" onclick="switchToTab(3)"></span> -->
-								<span class="header-link right forward" onclick="switchToTab(3)"></span>
-							</h1>
-
-							<div class="video-wrapper">
-								<div class="play"></div>
-							</div>
-
-							<div class="gallery-wrapper">
-								<div class="gallery-left">
-									<span class="label">Lush Interiors</span>
-								</div>
-								<div class="gallery-right">
-									<span class="label">Scenic Views</span>
-								</div>
-							</div>
-
-							<div class="viewer-wrapper"></div>
-						</div>
-
-						<div class="tab" id="tab3">
-							<h1>
-								<!-- <span class="header-link left glimpse" onclick="switchToTab(2)"></span> -->
-								<span class="header-link left back" onclick="switchToTab(2)"></span>
-								Neighbourhood
-								<!-- <span class="header-link right call" onclick="openModal('contact-input-wrapper')"></span> -->
-								<span class="header-link right forward" onclick="openModal('contact-input-wrapper')"></span>
-							</h1>
-
-							<div class="container google-maps-wrapper">
-								<iframe class="google-maps" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d27344.800069728262!2d77.04249327319971!3d28.44606157341231!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1472872821214"
-								frameborder="0" style="border:0" allowfullscreen></iframe>
-							</div>
-						</div>
-
-						<div class="tab contact-input" id="contact-input-wrapper">
-							<h1>
-								<span class="header-link left back" onclick="closeModal('contact-input-wrapper')"></span>
-								Get Callback
-							</h1>
-
-							<div class="container contact-bg">
-								<div class="contact-input-wrapper">
-									<input type="number" class="input" placeholder="Enter Contact Number" autofocus>
-									<input type="submit" class="submit" value="Get Callback" onclick="submitNumber()">
-								</div>
-
-								<div class="contact-input-wrapper contact-response">
-									Thanks for sharing your number<br>
-									We will contact you shortly
-								</div>
-							</div>
-						</div>
-
-						<div class="tab-controller-wrapper">
-							<span class="filled"></span>
-							<span></span>
-							<span></span>
-						</div>
-
-						<div class="mock-contact-wrapper" onclick="openModal('contact-input-wrapper')">
-							<div class="input">Enter Contact Number</div>
-							<div class="submit">Get Callback</div>
-						</div>
-					</div>
-
-					<div class="property-container error">
-						<div class="tab">
-							<h1></h1>
-
-							<div class="container">
-								<div class="text" onclick="window.location.reload()">Try Again</div>
-							</div>
-						</div>
-					</div>
-
-			     </div>
-
-			     <div class="tab-pane fade" id="imageTry">
-			     		<br>
-			     		<h4>Please Enter the Image name and press Submit to Proceed.</h4>
-			     		<br>
-				        <form class="form-horizontal">
-
-							  <div class="form-group"> 
-							    <div class="col-sm-offset-3 col-sm-4 col-sm-10">
-							    	<button type="button" class="btn btn-default" id="feedback">Feedback</button>
-							   	</div>
-							  </div>		
-							  <div class="form-group">
-							    <label class="control-label col-sm-2" for="Image Name">Image:</label>
-							    <div class="col-sm-6">
-							      <input type="text" class="form-control" id="imgPath" placeholder="Enter Image Name">
-							    </div>
-							  </div>
-							  <div class="form-group"> 
-							    <div class="col-sm-offset-2 col-sm-4 col-sm-10">
-							      <button type="button" class="btn btn-default" id="submitImg">Submit</button>
-							   	</div>
-							  </div>
-							  <br>
-							  <div class="form-group">
-							    <label class="control-label col-sm-3" for="fileupload"> Select a file to upload:</label>
-							    <div class="col-sm-6">
-							      
-							      <input type="file" class="form-control" name="fileupload" value="fileupload" id="fileupload">
-							    </div>
-							  </div>
-							  <div class="form-group"> 
-							    <div class="col-sm-offset-3 col-sm-4 col-sm-10">
-							    	<button type="button" class="btn btn-default" id="submit">Submit</button>
-							   	</div>
-							  </div>
-							  <div id="showResults"></div>
-						</form>
-			     </div>
-
-				 <div class="tab-pane fade" id="results">
-				 	<button type="button" class="btn btn-success" id="startProcess">Start Testing</button>
-			        <table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>Image</th>
-					        <th>Project</th>
-					        <th>OCR Response</th>
-					        <th>ResultText</th>
-					        <th>Result</th>
-					      </tr>
-					    </thead>
-					    <tbody id="tableContent">
-			
-					    </tbody>
-					  </table>
-				</div>
-			
+	<div  class="container">
+		
+		<header>
+			<h1>MakaanCam</h1>
+			<div class='callback-wrapper'>
+				<span> Get a Callback</span>
+			</div>
+		</header>
+		<section>
+			<div class="tab">
+  				<a href="javascript:void(0)" class="tablinks active" id="defaultOpen" onclick="openTab(event, 'capture')" onload="openTab(event,'capture')">Capture</a>
+  				<a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'upload')">Upload</a>		
 			</div>
 
-			
+			<div id="capture" class="tabcontent">
+				<div class="camera">
+					<video class="camera-view" id="video">Video stream not available.</video>
+					<button class="camera-capture-button" id="startbutton"></button>
+				</div>
 
+				<div class="camera-result-wrapper">
+					<div class="output">
+						<img id="photo" alt="The screen capture will appear in this box.">
+					</div>
+					<button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
+					<button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>				
+				</div>
+
+				<div class="showResults" id="showResults_capture">
+    				 <div class="result-header">
+   						<div class='back-button'>
+								<span id="back-to-capture">Back</span>
+						</div>
+    				 	<h1>Results</h1>
+    				 </div>
+    				 <div class="properties-list" id=capture-propperty-list></div>
+    			</div>
+			</div> 
+
+
+			<div id="upload" class="tabcontent">
+				<div class="form">
+	  				<form action="/action_page.php">
+						<label for="fileupload">Select an Image:</label>
+	    				<input type="file" name="fileupload" value="fileupload" id="fileupload">
+	    				<button type="button" id="submit">Select</button>
+	    			</form>
+    			</div>
+    			<div class="showResults" id="showResults_upload">
+    				 <div class="result-header">
+   						<div class='back-button'>
+								<span id="back-to-upload">Back</span>
+						</div>
+    				 	<h1>Results</h1>
+    				 </div>
+    				 <div class="properties-list" id=upload-propperty-list></div>
+    			</div>
+			</div>
+
+		</section>
+		<div class="modal"><span>Please wait... Loading...</span></div>
 	</div>
+
+
 
 	</body>
 </html>

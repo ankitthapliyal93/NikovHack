@@ -81,6 +81,10 @@ function hitAPI(imgpath) {
 
      var trial="";
      //imgpath="";
+     //document.ajaxStart();
+
+    $('body').addClass("loading");
+     
      gapi.load('client',function(){
               
               /*  gapi.client.setApiKey('AIzaSyCoRHpUba248snvvEYnVSPmXpzyLP_mcI0');

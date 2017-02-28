@@ -26,59 +26,90 @@ html, body {
 body {
     color: #555;
     font-family: "Comfortaa Regular", arial, sans-serif;
-    background-color: #ea9f34;
+    background-color:#353835;
+    /*overflow:hidden;*/
 }
+
+.container{
+    height:100%;
+    position:relative;
+    
+}
+
+header{
+    background-color: #f7f7f7;
+    position:relative;
+    overflow: auto;
+    width:100%;
+    height:7.5%;
+}
+
+header h1 {
+    
+    padding: 3.5%;
+    float:left;
+}
+
+.callback-wrapper{
+    float:right;
+    padding:3.5%;
+    background:url('../img/call icon-black.png') no-repeat left;
+    background-size:15%;
+    padding-left:7%;
+}
+
+
+section{
+    position:relative;
+    height:92.5%;
+    /*overflow:auto;*/
+}
+
+
 
 .camera {
     width: 100%;
     height: 100%;
-
     background-color: #333;
 }
 
-h1 {
-    padding: 15px 0;
-    height: 50px;
-    background-color: #f7f7f7;
-    text-align: center;
-}
 
 .camera-view {
     margin: 0;
     width: 100%;
-    height: calc(100% - 55px);
+    height: calc(100% - 100px);
 }
 
 .camera-capture-button {
     position: relative;
-    bottom: 50px;
+    bottom: 10%;
     left: calc(50% - 30px);
-
-    width: 60px;
-    height: 60px;
-
+    width: 18%;
+    height: 12%;
     background-color: #aaa;
-
     border-radius: 50%;
     border: 4px solid #fff;
     cursor: pointer;
 }
 
 .camera-result-wrapper {
-    position: fixed;
+    position: relative;
     left: 0;
-    top: 50px;
+    /*top: 50px;*/
     width: 100%;
     height: calc(100% - 100px);
-
     z-index: 2;
     display: none;
 }
 
-.camera-result {
-    width: 100%;
-    height: 100%;
+
+.output{
+    text-align: center;
+    margin:25% auto;
 }
+
+
+
 
 .camera-data-button {
     position: fixed;
@@ -97,3 +128,133 @@ h1 {
     right: 0;
     background-color: #fff;
 }
+
+
+/*For Results*/
+
+.showResults{
+    display:none;
+    height:100%;
+}
+
+.result-header{
+    background-color: #f7f7f7;
+    position:relative;
+    overflow: auto;
+    width:100%;
+    height:7.5%;
+}
+
+.result-header h1 {
+    
+    padding: 3.5%;
+    float:left;
+    margin-left:16%;
+}
+
+.back-button{
+    float:left;
+    padding:3.5%;
+    background:url('../img/left arrow.png') no-repeat left;
+    background-size:15%;
+    padding-left:4%;
+    margin-left:5%;
+}
+
+
+.properties-list{
+    height:92.5%;
+    overflow:auto;
+}
+
+
+/* For Boxes*/
+
+.box{
+  margin:25px auto;
+  width:80%;
+  height:100px;
+  background-color: #9EB3EB;
+  border-radius:5px;
+  padding:5%;
+}
+
+
+.shadow6{
+    position:relative;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.1) inset;
+}
+
+
+.shadow6:before, .shadow6:after{
+  position:absolute;
+  content:"";
+  top:14px;bottom:14px;left:0;right:0;
+  box-shadow:0 0 25px 3px #486685;
+  border-radius:100px/10px;
+  z-index:-1;
+}
+
+
+
+
+.iconDetails {
+    float:left;
+    height:60px;
+    width:60px;
+}
+
+
+.result-text{
+    float:left;
+    padding-left:5%;
+    width:calc(95% - 60px);
+}
+
+.result-text h4, .result-text p {
+    width:100%;
+    float:left;
+    font-size:0.8em;
+}
+
+.result-text h4{
+    font-size:0.9em;
+
+}
+
+.result-text p span {
+    color:#666;
+}
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .7 ) 
+                url('../img/ajax-loader.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+.modal span{
+    position:relative;
+    display:block;
+    text-align: center;
+    top:55%;
+}
+
+
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
