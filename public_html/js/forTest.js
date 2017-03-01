@@ -5,15 +5,6 @@ $(document).ready(function(){
 	
 	$('#feedback').click(collectFeedback);
 
-	var $body = $("body");
-
-/*	$(document).on({
-    	ajaxStart: function() { $body.addClass("loading");    },
-     	ajaxStop: function() { $body.removeClass("loading"); }    
-	});
-*/
-
-
 
 	//For files from local host
 	$("#submitImg").click(function() {
@@ -24,21 +15,7 @@ $(document).ready(function(){
 
 
 	//For files from local computer
-	$("#submit").click(function() {
-		
-		//uploadImage ();
-		var file    = document.querySelector('input[type=file]').files[0];
-		var reader  = new FileReader();
-		reader.onloadend = function () {
-						reader.name=file.name;
-						uploadImage(reader);
-						hitAPI(reader);
-						}
-
-		if (file) {
-				reader.readAsDataURL(file); //reads the data as a URL
-		}	    
-	});
+	
 
 	//For starting the testing Process.
 	$("#startProcess").click(function() {

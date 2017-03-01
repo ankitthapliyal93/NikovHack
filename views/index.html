@@ -11,10 +11,14 @@
 		<!--<link rel="stylesheet" type="text/css" href="/css/property-details.css" /> -->
 
         <script src="/js/jquery-3.1.0.min.js"></script>
-		<script src="/js/request.js"></script>
-		<script src="/js/capture.js"></script>
-		<script src="/js/sanitize.js"></script>
-		<script src="/js/search.js"></script>
+		<script src="/js/Request.js"></script>
+		<script src="/js/Controller.js"></script>
+		<script src="/js/CaptureOption.js"></script>
+		<script src="/js/UploadOption.js"></script>
+		<script src="/js/Main.js"></script>
+		
+		<script src="/js/Sanitize.js"></script>
+		<script src="/js/Search.js"></script>
 		<script src="/js/display.js"></script>
 		<script src="/js/functions.js"></script>
 		<script src="/js/feedback.js"></script>
@@ -49,8 +53,8 @@
 					<div class="output">
 						<img id="photo" alt="The screen capture will appear in this box.">
 					</div>
-					<button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
-					<button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>				
+					<button class="camera-data-retake camera-data-button" id="capture-retake">Retake</button>
+					<button class="camera-data-submit camera-data-button" id ="capture-submit">Submit</button>				
 				</div>
 
 				<div class="showResults" id="showResults_capture">
@@ -60,7 +64,7 @@
 						</div>
     				 	<h1>Results</h1>
     				 </div>
-    				 <div class="properties-list" id=capture-propperty-list></div>
+    				 <div class="properties-list" id="capture-propperty-list"></div>
     			</div>
 			</div> 
 
