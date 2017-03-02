@@ -27,7 +27,7 @@ var Feedback=(function(base64Data){
 
 
 	function uploadImage(){
-		var url='http://localhost:3000/upload/base64';
+		var url='/upload/base64';
 	    var formData={ content: this.base64Data, imageName:this.imgName};
 
 		var success=function(data){
@@ -63,7 +63,7 @@ var Feedback=(function(base64Data){
 			
 			uploadImage.call(this);
 			
-			var url='http://localhost:3000/feedback';
+			var url='/feedback';
 			var data={"imageID" : this.imgName , "feedback" : this.response};
 			var success=function(data) {
 				console.log(data);
