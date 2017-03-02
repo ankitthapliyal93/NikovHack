@@ -8,6 +8,13 @@ var Search=(function(){
     this.searchString=stringList;
     this.builderName=[];
     this.resultDataArray=[];
+    this.totalBuilderSearch=30;    //No of builder search strings , later will be set to length of the searchString array
+    this.builderSearchCompleteIndex=0;
+    this.totalStringSearch=30; //No of strings that will be searched
+    this.stringSearchCompleteIndex=0;
+    this.builderlock=false;
+    this.resultArrayLock=false;
+
   };
 
 
@@ -33,7 +40,7 @@ var Search=(function(){
   }
 
    //Function is responsible for finding possible builders and insert them into the builderName Array.
-  function findBuilder(stringListIndex,serverTrial){
+  function findBuilder(stringListIndex,serverTrial,resolve,reject){
     console.log("Here I am :"+this.searchString[stringListIndex].strText+" "+stringListIndex);
     var query=this.searchString[stringListIndex].strText;
     if(this.searchString[stringListIndex].strText.indexOf("%")>=0) query="";   //Invalid search string.
@@ -57,12 +64,17 @@ var Search=(function(){
                 //Either search string is exactly same as builder name or is in between the builder name.
                 if( (location+this.searchString[stringListIndex].strText.length == response.data[index].builderName.length) ||response.data[index].builderName[location+this.searchString[stringListIndex].strText.length]==" "){
                   //If buildername doesnot already exists in the builderName Array, then insert it.
+                  
+                  while(this.builderlock);  //Polling the builderlock
+                  this.builderlock=true;
                   if(this.builderName.indexOf(this.searchString[stringListIndex].strText.toLowerCase())<0){
                     this.builderName.push(this.searchString[stringListIndex].strText.toLowerCase());   //Inserting the search string and not the actual builder name.
                     //this.builderName.push(response.data[index].builderName);
                     console.log("hey1 "+this.searchString[stringListIndex].strText);
                     
                   }
+                  this.builderlock=false; //Releasing the lock
+
                   /*  this.searchString.splice(stringListIndex,1); 
                   stringListIndex--;*/
                   break;    // If Builder name found then break.
@@ -72,22 +84,28 @@ var Search=(function(){
                 location=response.data[index].builderName.toLowerCase().indexOf(tempValue.toLowerCase());
                 if(location>=0){
                   if( (location+tempValue.length == response.data[index].builderName.length) ||response.data[index].builderName[location+tempValue.length]==" "){
+                    while(this.builderlock);  //Polling the builderlock
+                    this.builderlock=true;
                     if(this.builderName.indexOf(tempValue.toLowerCase())<0){
                       this.builderName.push(tempValue.toLowerCase());
                       //this.builderName.push(response.data[index].builderName);
                       console.log("hey3 "+tempValue);
                       
                     }
+                    this.builderlock=false; //Releasing the lock
                     break;
                   }
                 }
               } 
               else if(this.searchString[stringListIndex].strText.toLowerCase().indexOf(response.data[index].builderName.toLowerCase())>=0){
+                while(this.builderlock);  //Polling the builderlock
+                this.builderlock=true;
                 //If the search string Contains the builder name. If search string has extra text. In that case we push actual builder name.
                 if(this.builderName.indexOf(response.data[index].builderName.toLowerCase())<0){
                   this.builderName.push(response.data[index].builderName.toLowerCase());
                   console.log("hey2 "+response.data[index].builderName);
                 }
+                this.builderlock=false; //Releasing the lock
               }
             }// End of if builder name exists
 
@@ -95,18 +113,27 @@ var Search=(function(){
         }
 
         //Calling the function recusively for other strings as well and at the end calling the talkToMakan function for getting project List.  
-        if(/*stringListIndex+1 <=12 &&*/ stringListIndex+1 < this.searchString.length )
-          findBuilder.call(this,stringListIndex+1,0);
-        else{
+       this.builderSearchCompleteIndex++;
+       if(this.builderSearchCompleteIndex==this.totalBuilderSearch){
           console.log("Builder Name List for :");
           console.log(this.builderName);
-          talkToMakan.call(this,0,0,0);
+          resolve(this.builderName);
+          //talkToMakan.call(this,0,0,0);
         }
+
       }.bind(this),//end of success
       error: function(xhr, status,errorThrown){
           if(serverTrial<5)
-            findBuilder.call(this,stringListIndex,serverTrial+1);
+            findBuilder.call(this,stringListIndex,serverTrial+1,resolve,reject);
           else{
+           this.builderSearchCompleteIndex++;
+           if(this.builderSearchCompleteIndex==this.totalBuilderSearch){
+              console.log("Builder Name List for :");
+              console.log(this.builderName);
+               resolve(this.builderName);
+            }
+
+
             console.log("YYYYYYYYYYYYYYYYYYYYYYYYYY\n\nCould not connect to the API"+errorThrown); //Code to handle if could not connect to API.
 
           }
@@ -119,10 +146,10 @@ var Search=(function(){
 
   //Function  is responsible for getting the Project List from the API for given this.searchString and builder name and store 
   //reults in this.resultDataArray.
-  function talkToMakan(stringListIndex,builderIndex,serverTrial) {
+  function talkToMakan(stringListIndex,builderIndex,serverTrial,resolve,reject) {
 
     var builder=""; 
-    var query=""
+    var query="";
     if(this.builderName.length > builderIndex) 
       {
         builder=this.builderName[builderIndex];
@@ -145,8 +172,10 @@ var Search=(function(){
         data:data,
         success: function(response) {
 
+          console.log(query);
+          console.log(response);
           if(response.data!=""){
-
+            console.log(response.data.length);
             for(var index=0; index<response.data.length;index++){
               var temp=new resultString();
               temp.resObject=createResultNode(response.data[index]);
@@ -154,7 +183,10 @@ var Search=(function(){
               temp.searchString=this.searchString[stringListIndex].strText;
               temp.fontSize=this.searchString[stringListIndex].font_size;
               temp.builder=builder;
+              while(this.resultArrayLock);
+              this.resultArrayLock=true;
               this.resultDataArray.push(temp);
+              this.resultArrayLock=false;
             }
           }
           else{//Only for testing Purposes
@@ -163,24 +195,33 @@ var Search=(function(){
           
             temp.relevanceScore=-1;
             temp.fontSize=-1;
+            while(this.resultArrayLock);
+            this.resultArrayLock=true;
             this.resultDataArray.push(temp);
+            this.resultArrayLock=false;
+          }
+          while(this.resultArrayLock);
+          this.resultArrayLock=true;
+          this.stringSearchCompleteIndex++;
+          this.resultArrayLock=false;
+          console.log(this.stringSearchCompleteIndex +" " +this.totalStringSearch);
+          if(this.stringSearchCompleteIndex == this.totalStringSearch*(this.builderName.length+1)){
+                console.log(this.resultDataArray);
+                resolve(this.resultDataArray);
           }
 
-          if((stringListIndex+1 <30 && stringListIndex+1 < this.searchString.length) ) //Search various strings for a particular builder name.
-            talkToMakan.call(this,stringListIndex+1,builderIndex,0);
-          else if(this.builderName.length >= builderIndex+1)     //Increment the builder name and proceed as usual.
-          {
-            talkToMakan.call(this,0,builderIndex+1,0);
-          }
-          else{   //In the end Display Results.
-              displayResult(this.resultDataArray);
-
-          }
         }.bind(this),  //End of success Function.
+        
         error: function(xhr, status,errorThrown){
+          console.log('Error');
           if(serverTrial<5)
-            talkToMakan.call(this,stringListIndex,builderIndex,serverTrial+1);
+            talkToMakan.call(this,stringListIndex,builderIndex,serverTrial+1,resolve,reject);
           else{
+            this.stringSearchCompleteIndex++;
+            if(this.stringSearchCompleteIndex==this.totalStringSearch){
+               resolve(this.resultDataArray);
+            }
+
             console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nCould not connect to the Server: "+errorThrown);
           }
         }.bind(this)
@@ -194,7 +235,47 @@ var Search=(function(){
   Search.prototype={
 
     startSearching:function(){
-      findBuilder.call(this,0,0); //StringListIndex, ServerTrials
+      this.totalBuilderSearch=Math.min(this.totalBuilderSearch,this.searchString.length);
+      this.builderSearchCompleteIndex=0;
+      var builderSearch=new Promise(function(resolve,reject){
+        for(var index=0;index<this.totalBuilderSearch; index++){
+            (function(tempIndex){
+              findBuilder.call(this,tempIndex,0,resolve,reject); //StringListIndex, ServerTrials
+            }).call(this,index);
+        }
+      }.bind(this));
+
+      //Invoking the buildersearch ajax calls
+      builderSearch.then(
+        function(resolve){
+            
+            //Invoking the Properties search calls
+            this.stringSearchCompleteIndex=0;
+            this.totalStringSearch=Math.min(this.totalStringSearch,this.searchString.length);
+            console.log(this.builderName.length+" "+this.totalStringSearch);
+            var MakaanSearch=new Promise(function(resolve,reject){
+                for(var index=0;index<=this.builderName.length; index++){
+                  for(var innerIndex=0;innerIndex<this.totalStringSearch ;innerIndex++){
+                      (function(builderIndex,stringListIndex){
+                          console.log(stringListIndex+" "+builderIndex);
+                          talkToMakan.call(this,stringListIndex,builderIndex,0,resolve,reject);
+                      }).call(this,index,innerIndex);
+                    }  
+                }  
+            }.bind(this));
+
+
+            MakaanSearch.then(function(resolve){
+                console.log("Here"); 
+                var display=new DisplayResult(this.resultDataArray,'upload');
+                display.displayResult();
+
+            }.bind(this),function(reject){console.log("Error");}.bind(this));
+
+
+
+
+        }.bind(this),function(reject){}.bind(this));
     }
   } 
 
