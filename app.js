@@ -77,17 +77,6 @@ function handleDatabase(req,res) {
 
 
 
-function getNewName(path){
-	var time =new Date().getTime();
-	var tempArray=path.split(".");
-	var type=tempArray[tempArray.length-1];
-	var random=Math.floor((Math.random() * 100) + 1);	//Last part generates random number between 1-100
-
-	var newName='img-' + time + '-' + random + '.' + type;
-	console.log(newName);
-	return newName; 
-
-}
 
 
 
@@ -123,18 +112,14 @@ function handleImageUploadBase64(req,res){
 
 	var fs = require('fs');
   	var path = require('path');		//path is required to resolve the path
-   	console.log(req.body);
     var base64Data = req.body.content;
-
-    var type=base64Data.split(',')[0].split('/')[1].split(';')[0];
-    base64Data=base64Data.replace(/data:image\/.*;base64,/, "");
-
-    var newName=getNewName(type);
+   
+    var newName=req.body.imageName;
     var newPath='./uploads/'+newName;
     var targetPath = path.resolve(newPath);
     console.log("\n"+targetPath +"\n")
     var imageBuffer = new Buffer(base64Data, 'base64'); //console = <Buffer 75 ab 5a 8a ...
-	fs.writeFile(targetPath, imageBuffer, function(err) { 
+	 fs.writeFile(targetPath, imageBuffer, function(err) { 
 			if (err) {
             	console.log("Error Occured"+ err);
             	res.json({"code" : 100, "status" : "Error in Uploading image."});

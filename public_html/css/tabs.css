@@ -1,7 +1,7 @@
 div.tab {
     position:relative;
     overflow: hidden;
-    height:7.5%;
+    height:50px;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
@@ -35,7 +35,7 @@ div.tab a:focus, .active {
     display: none;
     /*border: 1px solid #ccc;*/
     border-top: none;
-    height:92.5%;
+    height:calc(100% - 50px);
 }
 
 

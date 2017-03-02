@@ -73,8 +73,9 @@ var DisplayResult=(function(){
           $('.camera-result-wrapper').hide();
           $("#showResults_capture").show();
           $('#back-to-capture').click(function(){
-            $("#showResults_capture").hide();
-            resetCamera();
+          $("#showResults_capture").hide();
+           $("#capture-retake").trigger('click'); 
+            //this.resetCamera();
             $('.camera').show();
           });
 

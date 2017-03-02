@@ -1,5 +1,5 @@
-  /*Aim: First try to search for the builder from the List of strings and then using a combined search for builders and strings
-         generate Projects of relevance.*/
+/*Aim: First try to search for the builder from the List of strings and then using a combined search for builders and strings
+        generate Projects of relevance.*/
 
 
 var Search=(function(){
@@ -246,14 +246,14 @@ var Search=(function(){
       }.bind(this));
 
       //Invoking the buildersearch ajax calls
-      builderSearch.then(
+      return builderSearch.then(
         function(resolve){
             
             //Invoking the Properties search calls
             this.stringSearchCompleteIndex=0;
             this.totalStringSearch=Math.min(this.totalStringSearch,this.searchString.length);
             console.log(this.builderName.length+" "+this.totalStringSearch);
-            var MakaanSearch=new Promise(function(resolve,reject){
+            /*var makaanSearch=*/return new Promise(function(resolve,reject){
                 for(var index=0;index<=this.builderName.length; index++){
                   for(var innerIndex=0;innerIndex<this.totalStringSearch ;innerIndex++){
                       (function(builderIndex,stringListIndex){
@@ -263,17 +263,6 @@ var Search=(function(){
                     }  
                 }  
             }.bind(this));
-
-
-            MakaanSearch.then(function(resolve){
-                console.log("Here"); 
-                var display=new DisplayResult(this.resultDataArray,'upload');
-                display.displayResult();
-
-            }.bind(this),function(reject){console.log("Error");}.bind(this));
-
-
-
 
         }.bind(this),function(reject){}.bind(this));
     }

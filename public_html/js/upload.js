@@ -40,10 +40,7 @@ function uploadImage(reader)
 
 	var url='http://localhost:3000/upload/base64';
     var formData={ content: reader.result};
-	/*
-	
-	
-*/
+
 	var success=function(data){
   					console.log(data);
 					var imageName=data.fileName;
@@ -62,8 +59,6 @@ function uploadImage(reader)
   		data: formData,
   		success: success,
   		dataType:"json",
-  		//processData: false,
-  		//contentType:'application/json',
   		error: error
     });
 

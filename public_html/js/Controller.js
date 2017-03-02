@@ -28,11 +28,42 @@ var Controller= (function(){
 		this.stringList=sanitize.sanitizeData();		//Invoking the sanitize Operation.
 
 		//Searching the makaan API.
-		var search=new Search(this.stringList)
-		this.resultDataArray=search.startSearching();
-		/*var builderName=[];
-        //Call to findBuilder() function. Arguments include-Array of strings, arrayIndex, array of builders, imgpath,index. 
-        */     
+		var searchAPI=new Search(this.stringList)
+		//MakaanSearch is a promise returned by the Search class 
+		var MakaanSearch=searchAPI.startSearching();
+		MakaanSearch.then(function(resolve){
+				this.resultDataArray=resolve;
+                console.log("Here"+this.requestType); 
+                //Creating the Display Class to display the results.
+                var display=new DisplayResult(this.resultDataArray,this.requestType);
+                display.displayResult();
+                $('.feedback-ask').show();
+				$('.feedback-thanks').hide();
+                
+                $(document).ready(function(){
+					$("#"+this.requestType+"Yes").click(function(){ 
+							var feedback=new Feedback(this.base64Data,1);
+							feedback.collectFeedback();
+							$('.feedback-ask').hide();
+							$('.feedback-thanks').show();
+
+						}.bind(this)
+						
+					);
+					$("#"+this.requestType+"No").click(function(){ 
+							var feedback=new Feedback(this.base64Data,0);
+							feedback.collectFeedback();
+							$('.feedback-ask').hide();
+							$('.feedback-thanks').show();
+
+						}.bind(this)
+					);
+
+				}.bind(this));	
+
+
+            }.bind(this),function(reject){console.log("Error");}.bind(this));
+		   
 
 	}
 
