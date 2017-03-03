@@ -9,6 +9,8 @@ var CaptureOption =( function() {
     // The width and height of the captured photo. We will set the
     // width to the value defined here, but the height will be
     // calculated based on the aspect ratio of the input stream.
+    this.MAX_WIDTH=1024;
+    this.MAX_HEIGHT=768;
     this.width=320;  // We will scale the photo width to this
     this.height=0;   // This will be computed based on the input stream
     this.streaming=false; // |streaming| indicates whether or not we're currently streaming
@@ -35,7 +37,35 @@ var CaptureOption =( function() {
 
   function canPlayHandler(ev){
           if (!this.streaming) {
-            this.height = this.video.videoHeight / (this.video.videoWidth/this.width);
+            this.width=this.video.videoWidth;
+            this.height=this.video.videoHeight;
+            console.log(this.width+" "+this.height);
+            // Firefox currently has a bug where the height can't be read from
+            // the video, so we will make assumptions if this happens.
+            if (isNaN(this.height)) {
+              this.height = this.width / (4/3);
+            }
+            if (this.width > this.height) {
+              if (this.width > this.MAX_WIDTH) {
+                this.height *= this.MAX_WIDTH / this.width;
+                this.width = this.MAX_WIDTH;
+              }
+            } else {
+              if (this.height > this.MAX_HEIGHT) {
+                this.width *= this.MAX_HEIGHT / this.height;
+                this.height = this.MAX_HEIGHT;
+              }
+            }
+            
+            console.log(this.width+" "+this.height);
+            /*this.video.setAttribute('width', this.width);
+            this.video.setAttribute('height', this.height);*/
+            this.canvas.setAttribute('width', this.width);
+            this.canvas.setAttribute('height', this.height);
+            this.streaming = true;
+
+
+            /*this.height = this.video.videoHeight / (this.video.videoWidth/this.width);
 
             // Firefox currently has a bug where the height can't be read from
             // the video, so we will make assumptions if this happens.
@@ -48,7 +78,7 @@ var CaptureOption =( function() {
             this.video.setAttribute('height', this.height);
             this.canvas.setAttribute('width', this.width);
             this.canvas.setAttribute('height', this.height);
-            this.streaming = true;
+            this.streaming = true;*/
           }
         }
 
@@ -138,7 +168,7 @@ var CaptureOption =( function() {
                 this.canvas.width = this.width;
                 this.canvas.height = this.height;
                 context.drawImage(this.video, 0, 0, this.width, this.height);
-                this.base64Data = this.canvas.toDataURL('image/jpeg');
+                this.base64Data = this.canvas.toDataURL();
                 this.photo.setAttribute('src', this.base64Data);
               } else {
                 this.clearphoto();

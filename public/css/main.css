@@ -109,7 +109,9 @@ section{
     margin:25% auto;
 }
 
-
+.photo-capture{
+    width:100%;
+}
 
 
 .camera-data-button {
