@@ -1,70 +1,114 @@
+
 var express = require('express');
-var mysql  = require('mysql');
-var hbs = require('hbs');
+var bodyParser = require('body-parser');
+var path=require('path');
+var hbs=require('hbs');
+
+//setting up the environment variables.
+require('dotenv').config();
+
+
+//Resolves the module path
+require('app-module-path').addPath(path.resolve(__dirname, './server'));
+
+//Sets the Port that our server will listen too.
+const PORT = process.env.PORT || 4000;
+
 var app = express();
 
+//Setting the path for the view folder.
+app.set('views', path.join(__dirname, '/server/views'));
 
-//To set the content type HMTL.
+//To set Path of static assets..
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
-app.use(express.static('public_html'));
+app.use(express.static('public'));
 
 
-var bodyParser = require('body-parser');
-	app.use(bodyParser.json()); 		// support json encoded bodies
-	app.use(bodyParser.urlencoded({ extended: true,limit:'5mb' })); 	// support
-//Setting th upload directory
-//app.use(ebodyParser.({uploadDir:'/uploads'}));
+app.use(bodyParser.json()); 		// support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true,limit:'5mb' })); 	// Limit is 5mb so that base64 data can be saved.
 
 
 
+// Setup api routes
+require('services/routeService')(app);
+app.listen(PORT);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 //creating a pool for database connectivity to handle concurrent users properly. 
 var pool      =    mysql.createPool({
     connectionLimit : 100, 
     host     : 'localhost',
-    port	  : '3306',
+    port    : '3306',
     user     : 'root',
     password : '',
     database : 'makaanCam',
     debug    :  false
 });
  
+
+
+
  
+
+
+
 
 //This functions handles the database connectivity and inserts the feedback into the database.
 function handleDatabase(req,res) {
-	//This is required for post request for parsing the post body.
-	
-	pool.getConnection(function(err,connection){
+  //This is required for post request for parsing the post body.
+  
+  pool.getConnection(function(err,connection){
         if (err) {
            connection.release();
            res.json({"code" : 100, "status" : "Error in connection database"});
            return;
         }   
  
-    	console.log('connected as id ' + connection.threadId);
+      console.log('connected as id ' + connection.threadId);
 
         //Parsing the values of the feedback
         var values={
-         		imageID : req.body.imageID,
-         		feedback : req.body.feedback
-         	};
+            imageID : req.body.imageID,
+            feedback : req.body.feedback
+          };
 
         var qry = "INSERT INTO feedback (imageID,feedback) VALUES ('"+values.imageID+ "','" +values.feedback+ "')";
         
         connection.query(qry, function(err,rows){
             connection.release();
             if(err) {
-            	console.log("Error: "+err);
-            	res.json({"code" : 100, "status" : err});  
-            	return;               
-             	}
+              console.log("Error: "+err);
+              res.json({"code" : 100, "status" : err});  
+              return;               
+              }
             else{
-             	res.json(rows);
-             	return;
-             }	           
-    	});
+              res.json(rows);
+              return;
+             }             
+      });
  
         connection.on('error', function(err) {      
                res.json({"code" : 100, "status" : "Error in connection database"});
@@ -74,6 +118,7 @@ function handleDatabase(req,res) {
 }
 
 
+*/
 
 
 
@@ -81,86 +126,3 @@ function handleDatabase(req,res) {
 
 
 
-
-
-function handleImageUpload(req,res){
-
-	var fs = require('fs');
-  	var path = require('path');		//path is reqyired to resolve the path
-    var tempPath = req.files.file.path;
-    var newName=getNewName(tempPath)
-    var newPath='./uploads/'+newName;
-    var targetPath = path.resolve(newPath);
-    console.log("Paths:  "+tempPath+" "+targetPath)
-    fs.rename(tempPath, targetPath, function(err) {
-            if (err) {
-            	console.log("Error Occured"+ err);
-            	res.json({"code" : 100, "status" : "Error in Uploading image."});
-            	return;
-            }	
-            console.log("Upload completed!");
-            res.status(200).json({fileName:newName,success:"Image uploaded"});
-            return;
-        });
-}
-
-
-
-
-function handleImageUploadBase64(req,res){
-
-
-	var fs = require('fs');
-  	var path = require('path');		//path is required to resolve the path
-    var base64Data = req.body.content;
-   
-    var newName=req.body.imageName;
-    var newPath='./uploads/'+newName;
-    var targetPath = path.resolve(newPath);
-    console.log("\n"+targetPath +"\n")
-    var imageBuffer = new Buffer(base64Data, 'base64'); //console = <Buffer 75 ab 5a 8a ...
-	 fs.writeFile(targetPath, imageBuffer, function(err) { 
-			if (err) {
-            	console.log("Error Occured"+ err);
-            	res.json({"code" : 100, "status" : "Error in Uploading image."});
-            	return;
-            }	
-            console.log("Upload completed!");
-            res.status(200).json({fileName:newName,success:"Image uploaded"});
-            return;
-	}); 
-
-}
-
-
-
-//This handles all the request to homepage. 
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
-
-//This handles the post request to save the feedback of the user to the database.
-app.post('/feedback',function(req,res){
-	console.log("checking!!");
-	handleDatabase(req,res);
-});
-
-
-
-
-//This handles the upload of the image.
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
-app.post('/upload',multipartMiddleware,function(req,res){
-	handleImageUpload(req,res);
-});
-
-
-app.post('/upload/base64',function(req,res){
-	handleImageUploadBase64(req,res);
-});
-
-
-
-app.listen(3000);

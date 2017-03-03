@@ -10,7 +10,9 @@
     "fs": "0.0.1-security",
     "connect-multiparty": "~2.0.0",
     "mysql": "~2.13.0",
-    "hbs": "~4.0.1"
+    "hbs": "~4.0.1",
+    "app-module-path": "~2.2.0",
+    "dotenv": "~4.0.0"
   },
   "devDependencies": {},
   "scripts": {
