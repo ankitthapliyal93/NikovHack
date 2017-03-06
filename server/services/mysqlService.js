@@ -1,5 +1,6 @@
 
 var mysql  = require('mysql');
+var logger = require('services/loggerService')
 var mysqlService={};
 
 	//creating a pool for database connectivity to handle concurrent users properly. 
@@ -13,10 +14,9 @@ var pool      =    mysql.createPool({
 	debug    :  false
 });
 
-function insert(data){
+function insert(qry){
 
- 	return new Promise(function(resolve,reject){
- 		console.log('Promise query');
+ 	return new Promise(function(resolve,reject){		
 		pool.getConnection(function(err,connection){
 		        if (err) {
 		           connection.release();
@@ -24,17 +24,16 @@ function insert(data){
 		           return;
 		        }   
 		 
-		    	console.log('connected as id ' + connection.threadId);
+		    	logger.debug('connected as id: ' + connection.threadId);
+		        logger.debug('The query is: ',qry);
+		
 
-		        //Parsing the values of the feedback
 		        
-
-		        var qry = "INSERT INTO feedback (imageID,feedback) VALUES ('"+data.imageID+ "','" +data.feedback+ "')";
-		        
+		  
 		        connection.query(qry, function(err,rows){
 		            connection.release();
 		            if(err) {
-		            	console.log("Error: "+err);
+		            	logger.error("Error: "+err);
 		            	reject(err); 
 		            	return;               
 		             	}
@@ -44,7 +43,8 @@ function insert(data){
 		             }	           
 		    	});
 		 
-		        connection.on('error', function(err) {      
+		        connection.on('error', function(err) {
+		        	   logger.error("Error:  "+err);      
 		               reject(err);
 		               return;     
 		        });

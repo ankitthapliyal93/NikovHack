@@ -11,6 +11,9 @@ require('dotenv').config();
 //Resolves the module path
 require('app-module-path').addPath(path.resolve(__dirname, './server'));
 
+//required for logging service.
+var logger=require('services/loggerService');
+
 //Sets the Port that our server will listen too.
 const PORT = process.env.PORT || 4000;
 
@@ -33,96 +36,5 @@ app.use(bodyParser.urlencoded({ extended: true,limit:'5mb' })); 	// Limit is 5mb
 // Setup api routes
 require('services/routeService')(app);
 app.listen(PORT);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-//creating a pool for database connectivity to handle concurrent users properly. 
-var pool      =    mysql.createPool({
-    connectionLimit : 100, 
-    host     : 'localhost',
-    port    : '3306',
-    user     : 'root',
-    password : '',
-    database : 'makaanCam',
-    debug    :  false
-});
- 
-
-
-
- 
-
-
-
-
-//This functions handles the database connectivity and inserts the feedback into the database.
-function handleDatabase(req,res) {
-  //This is required for post request for parsing the post body.
-  
-  pool.getConnection(function(err,connection){
-        if (err) {
-           connection.release();
-           res.json({"code" : 100, "status" : "Error in connection database"});
-           return;
-        }   
- 
-      console.log('connected as id ' + connection.threadId);
-
-        //Parsing the values of the feedback
-        var values={
-            imageID : req.body.imageID,
-            feedback : req.body.feedback
-          };
-
-        var qry = "INSERT INTO feedback (imageID,feedback) VALUES ('"+values.imageID+ "','" +values.feedback+ "')";
-        
-        connection.query(qry, function(err,rows){
-            connection.release();
-            if(err) {
-              console.log("Error: "+err);
-              res.json({"code" : 100, "status" : err});  
-              return;               
-              }
-            else{
-              res.json(rows);
-              return;
-             }             
-      });
- 
-        connection.on('error', function(err) {      
-               res.json({"code" : 100, "status" : "Error in connection database"});
-               return;     
-        });
-   });
-}
-
-
-*/
-
-
-
-
-
-
+logger.info('Server Started');
 

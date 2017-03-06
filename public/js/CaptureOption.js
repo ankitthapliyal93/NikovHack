@@ -21,6 +21,7 @@ var CaptureOption =( function() {
     this.localstream=null; 
     this.base64Data="";
     this.requestObject=null;  //Object of class Request 
+    this.tried=false;   //To check if camera reset has been tried before
 
     initialize.call(this);  
   };
@@ -28,7 +29,7 @@ var CaptureOption =( function() {
 
   //Constructor Function
   function initialize(){
-    var startUp = this.startUp.bind(this);
+    var startUp = this.startUp.bind(this);    
     window.addEventListener('load', startUp, false);    //Event to be invoked when window is loaded.
 
   }
@@ -39,7 +40,6 @@ var CaptureOption =( function() {
           if (!this.streaming) {
             this.width=this.video.videoWidth;
             this.height=this.video.videoHeight;
-            console.log(this.width+" "+this.height);
             // Firefox currently has a bug where the height can't be read from
             // the video, so we will make assumptions if this happens.
             if (isNaN(this.height)) {
@@ -56,29 +56,11 @@ var CaptureOption =( function() {
                 this.height = this.MAX_HEIGHT;
               }
             }
-            
-            console.log(this.width+" "+this.height);
-            /*this.video.setAttribute('width', this.width);
-            this.video.setAttribute('height', this.height);*/
+
             this.canvas.setAttribute('width', this.width);
             this.canvas.setAttribute('height', this.height);
             this.streaming = true;
 
-
-            /*this.height = this.video.videoHeight / (this.video.videoWidth/this.width);
-
-            // Firefox currently has a bug where the height can't be read from
-            // the video, so we will make assumptions if this happens.
-
-            if (isNaN(this.height)) {
-              this.height = this.width / (4/3);
-            }
-
-            this.video.setAttribute('width', this.width);
-            this.video.setAttribute('height', this.height);
-            this.canvas.setAttribute('width', this.width);
-            this.canvas.setAttribute('height', this.height);
-            this.streaming = true;*/
           }
         }
 
@@ -96,6 +78,13 @@ var CaptureOption =( function() {
           }
 
   function navigatorFailureHandler(err) {
+            
+            if(!this.tried){
+              this.tried=true;
+              this.resetCamera();
+              return;
+            }
+            alert("Could not connect to the camera!");
             console.log("An error occured! " + err);
           }
 
@@ -103,12 +92,14 @@ var CaptureOption =( function() {
   
   function startbuttonClickHandler(ev){
 
-        this.takepicture();
-        this.vidOff();
-        $(".camera").hide();
-        $(".camera-result-wrapper").show();
-        ev.preventDefault();
+        if(this.streaming){
+          this.takepicture();
+          this.vidOff();
+          $(".camera").hide();
+          $(".camera-result-wrapper").show();
+          ev.preventDefault();
         }
+    }
 
   function sendRequest(){
       var requestType='capture';
@@ -124,7 +115,8 @@ var CaptureOption =( function() {
 
     startUp: function() {
       
-      document.getElementById("defaultOpen").click(); //For default opening of the tab.        
+      document.getElementById("defaultOpen").click(); //For default opening of the tab. 
+      //new Callback();    //TO initialize the call-back functionality.
       this.video = document.getElementById('video');
       this.photo = document.getElementById('photo');
       this.startbutton = document.getElementById('startbutton');
@@ -141,6 +133,12 @@ var CaptureOption =( function() {
       this.startbutton.addEventListener('click',startbuttonClickHandler.bind(this), false);
       $("#capture-retake").click(this.resetCamera.bind(this));
       $("#capture-submit").click(sendRequest.bind(this));
+      $('#back-to-capture').click(function(){
+            $("#showResults_capture").hide();
+            //$("#capture-retake").trigger('click'); 
+            this.resetCamera();
+            $('.camera').show();
+          }.bind(this));   
       this.clearphoto();
     },   //End of startup function.
 

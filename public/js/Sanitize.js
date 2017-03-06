@@ -80,13 +80,16 @@ var Sanitize=(function(){
           handleLogoAnnotation.call(this);
         }
 
-        //Processinf for the Text detection Part        
+        //Processing for the Text detection Part        
         if(this.scannedJson.responses[0].textAnnotations){
           handleTextAnnotation.call(this);
-          console.log(this.sanitizedText[0].m_strText);
+          console.log("Text Received from API:\n\n"+this.sanitizedText[0].m_strText);
         }
-
-         this.refineText();   //call to refine the sanitized text.
+        
+        if(this.sanitizedText.length!=0){
+          this.refineText();   //call to refine the sanitized text.
+        }
+ 
          return this.stringList;
 
       },
@@ -115,7 +118,7 @@ var Sanitize=(function(){
             var horizontalCloseIndex=-1;
 
             var currHeight = this.sanitizedText[index].m_cBoundingCoordinates[3].y - this.sanitizedText[index].m_cBoundingCoordinates[0].y;
-            console.log("\n"+this.sanitizedText[index].m_strText+"\n");
+            //console.log("\n"+this.sanitizedText[index].m_strText+"\n");
             
             //Inner loop to scan through the rest of the array.
             for(var tempIndex = index+1; tempIndex < this.sanitizedText.length; tempIndex++){
@@ -125,7 +128,7 @@ var Sanitize=(function(){
               var verticalClose=Math.abs(this.sanitizedText[tempIndex].m_cBoundingCoordinates[3].y - this.sanitizedText[index].m_cBoundingCoordinates[3].y);
               var horizontalClose=Math.abs(this.sanitizedText[tempIndex].m_cBoundingCoordinates[0].x - this.sanitizedText[index].m_cBoundingCoordinates[0].x);
 
-              console.log(this.sanitizedText[tempIndex].m_strText+" "+verticalDistance+" "+horizontalDistance+" "+verticalClose+" "+horizontalClose);
+              //console.log(this.sanitizedText[tempIndex].m_strText+" "+verticalDistance+" "+horizontalDistance+" "+verticalClose+" "+horizontalClose);
 
               if(verticalClose <= verticalCloseMargin && horizontalDistance <= horizontalMargin && minHorizontal == Infinity && horizontalDistance <= minHorizontal ){
                 //We only need to check horizontaldistance only for the next element. This can be moved outside the loop.
@@ -171,7 +174,7 @@ var Sanitize=(function(){
               }   
 
               var nextHeight=this.sanitizedText[nextIndex].m_cBoundingCoordinates[3].y - this.sanitizedText[nextIndex].m_cBoundingCoordinates[0].y;
-              console.log(this.sanitizedText[index].m_strText+" XXXXXXX "+currHeight+" "+nextHeight);
+              //console.log(this.sanitizedText[index].m_strText+" XXXXXXX "+currHeight+" "+nextHeight);
 
               //If height Difference is too huge or merging elements are vertically aligned then, we also push them individually.
               //This take care of faulty vertical merging.
@@ -238,7 +241,7 @@ var Sanitize=(function(){
           //We  can also create a dictionary of words which cannot be the project or builder names and remove them like --"THE". 
           for(var index=0;index<this.stringList.length;index++){
             if(this.stringList[index].strText.length>maxLengthPermitted || this.stringList[index].strText.length<minLengthPermitted){
-              console.log(this.stringList[index].strText);
+              //console.log(this.stringList[index].strText);
               this.stringList.splice(index,1);
               index--;
             }

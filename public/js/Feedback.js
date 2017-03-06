@@ -41,15 +41,10 @@ var Feedback=(function(base64Data){
 	       			console.log("Error");
 		  		};
 		
+		
 
-		$.ajax({
-	  		type: "POST",
-	  		url: url,
-	  		data: formData,
-	  		success: success,
-	  		dataType:"json",
-	  		error: error
-	    });
+		service.post(url,formData).then(success,error);		
+		
 	}
 
 	//Prototype Functions.
@@ -72,17 +67,8 @@ var Feedback=(function(base64Data){
 			var error=function(error){
 		       console.log(error);
 			};
-
-			$.ajax({
-		  		type: "POST",
-		  		url: url,
-		  		data: data,
-		  		dataType:'json',
-		  		success: success,
-		  		error: error
-
-		    });
-
+		
+			service.post(url,data).then(success,error);
 		}
 
 

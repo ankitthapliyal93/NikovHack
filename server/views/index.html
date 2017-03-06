@@ -8,9 +8,12 @@
 		<link rel='stylesheet' href='/css/main.css'>
 		<link rel="stylesheet" type="text/css" href="/css/tabs.css" />
 		<link rel="stylesheet" type="text/css" href="/css/upload.css" />
+		<link rel="stylesheet" type="text/css" href="/css/modals.css" />
 		<!--<link rel="stylesheet" type="text/css" href="/css/property-details.css" /> -->
 
-        <script src="/js/jquery-3.1.0.min.js"></script>
+        <script src="/vendor/js/jquery-3.1.0.min.js"></script>
+		<script src="/js/AjaxHandler.js"></script>
+		<script src="/js/Modal.js"></script>
 		<script src="/js/Request.js"></script>
 		<script src="/js/Controller.js"></script>
 		<script src="/js/CaptureOption.js"></script>
@@ -33,7 +36,7 @@
 		<header>
 			<h1>MakaanCam</h1>
 			<div class='callback-wrapper'>
-				<span> Get a Callback</span>
+				<span id='callback-button'> Get a Callback</span>
 			</div>
 		</header>
 		<section>
@@ -80,7 +83,7 @@
 
 			<div id="upload" class="tabcontent">
 				<div class="form">
-	  				<form action="/action_page.php">
+	  				<form >
 						<label for="fileupload">Select an Image:</label>
 	    				<input type="file" name="fileupload" value="fileupload" id="fileupload">
 	    				<button type="button" id="submit">Select</button>
@@ -93,7 +96,7 @@
 						</div>
     				 	<h1>Properties</h1>
     				 </div>
-    				 <div class="properties-list" id=upload-propperty-list></div>
+    				 <div class="properties-list" id='upload-propperty-list'></div>
     				 <div class="feedback-wrapper">
     				 	<div class="feedback-ask">
     				 		<h3>Find what you Looking for?</h3>
@@ -109,7 +112,24 @@
 			</div>
 
 		</section>
-		<div class="modal"><span>Please wait... Loading...</span></div>
+		<div class="wait-modal"><span>Please wait... Loading...</span></div>
+		<div id="myModal" class="modal">
+		  <!-- Modal content -->
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <span class="close">&times;</span>
+		      <h2>Please Fill the Details:</h2>
+		    </div>
+		    <div class="modal-body">
+		      <form>
+					<label for="callback">Contact Number: </label>
+	    			<input type="text" name="callback" value="" id="callback">
+	    			<button type="button" id="submitNumber">Submit</button>
+	    	  </form>
+		    </div>
+		  </div>
+
+		</div>
 	</div>
 
 

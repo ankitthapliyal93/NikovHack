@@ -33,7 +33,6 @@ var Controller= (function(){
 		var MakaanSearch=searchAPI.startSearching();
 		MakaanSearch.then(function(resolve){
 				this.resultDataArray=resolve;
-                console.log("Here"+this.requestType); 
                 //Creating the Display Class to display the results.
                 var display=new DisplayResult(this.resultDataArray,this.requestType);
                 display.displayResult();
@@ -69,6 +68,9 @@ var Controller= (function(){
 
 	function requestError(error){
 		//Fill this code for displaying error.
+		alert('Could Not connect to the Server');
+		$('body').removeClass("loading");
+		return;
 	}
 
 

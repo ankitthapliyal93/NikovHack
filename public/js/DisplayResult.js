@@ -22,7 +22,7 @@ var DisplayResult=(function(){
                     }.bind(this));
 
         $("#"+this.cmd+"-propperty-list").html("");
-
+        console.log("\nResult Array:\n ");
         console.log(this.resultDataArray);
 
 
@@ -42,6 +42,11 @@ var DisplayResult=(function(){
 
         //For single Image tab.
 
+        if(this.resultDataArray.length==0){
+              var resultData='<div class="box shadow6"><h3>No matching results Found!!!</h3></div>';
+              $('#'+this.cmd+'-propperty-list').append(resultData);
+             }
+
         for(var tempIndex=0; tempIndex < this.resultDataArray.length  && tempIndex<this.noOfResults; tempIndex++){
           if(this.resultDataArray[tempIndex].relevanceScore==-1){
              if(tempIndex==0){
@@ -56,8 +61,9 @@ var DisplayResult=(function(){
             var tempdata=[];
             tempdata[0]=this.resultDataArray[tempIndex].resObject.entityName;
             tempdata[1]=this.resultDataArray[tempIndex].resObject.displayText;
+            tempdata[2]="https://www.makaan.com/"+this.resultDataArray[tempIndex].resObject.redirectURL;
           }
-          var resultData='<div class="box shadow6"><img src="../img/contact page bg.png" class="iconDetails"/><div class="result-text"><h4>'+tempdata[0]+'</h4><p>'+tempdata[1]+'</p></div></div>';
+          var resultData='<a href="'+tempdata[2]+'"  target="_blank"><div class="box shadow6"><img src="../img/stores.png" class="iconDetails"/><div class="result-text"><h4>'+tempdata[0]+'</h4><p>'+tempdata[1]+'</p></div></div></a>';
           $('#'+this.cmd+'-propperty-list').append(resultData);
         }
         
@@ -65,20 +71,9 @@ var DisplayResult=(function(){
         if(this.cmd=='upload'){
           $('.form').hide();
           $("#showResults_upload").show();
-          $('#back-to-upload').click(function(){
-            $("#showResults_upload").hide();
-            $('.form').show();
-          });
         }else{
           $('.camera-result-wrapper').hide();
           $("#showResults_capture").show();
-          $('#back-to-capture').click(function(){
-          $("#showResults_capture").hide();
-           $("#capture-retake").trigger('click'); 
-            //this.resetCamera();
-            $('.camera').show();
-          });
-
         }
 
 

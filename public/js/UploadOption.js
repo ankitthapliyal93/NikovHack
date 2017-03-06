@@ -15,13 +15,16 @@ var UploadOption=(function(){
 	function initialize(){
 		$(document).ready(function(){
 			$("#submit").click(uploadSubmitHandler.bind(this));
+			$('#back-to-upload').click(function(){
+            	$("#showResults_upload").hide();
+            	$('.form').show();
+          	});
 		}.bind(this));		
 	}
 
 	//Private methods of this class
 	
 	function sendRequest(){
-	  console.log("Sending Request");
       var requestType='upload';
       var passControl=new Controller(this.base64Data,requestType);
       passControl.startProcess();
@@ -35,7 +38,7 @@ var UploadOption=(function(){
     	img.setAttribute('src',reader.result);
     	var actualWidth=img.width;
     	var actualHeight=img.height;
-    	console.log("Image Size: "+actualWidth+" "+actualHeight);
+    	
     	
     	//Keeping the aspect Ratio of the image as same.
     	if (actualWidth > actualHeight) {
@@ -49,7 +52,6 @@ var UploadOption=(function(){
     			actualHeight = this.MAX_HEIGHT;
   			}
 		}
-		console.log("Image Compressed: "+actualWidth+" "+actualHeight);
 		var canvas=document.createElement('canvas');
 		canvas.width=actualWidth;
 		canvas.height=actualHeight;
@@ -61,10 +63,13 @@ var UploadOption=(function(){
 
 	function uploadSubmitHandler() {
 		var file    = document.querySelector('input[type=file]').files[0];
+		if(!file) {
+			alert("Please Select an image first");
+			return;
+		}
 		var reader  = new FileReader();
 		reader.onloadend = function () {
 							reader.name=file.name;
-							console.log(reader);
 							compressImage.call(this,reader);							
 							sendRequest.call(this);
 						}.bind(this);

@@ -34,14 +34,15 @@ var Search=(function(){
     var temp= { projectId : nodeData.id.split("-")[2],
                 displayText : nodeData.displayText,
                 entityName : nodeData.entityName,
-                builderName : nodeData.builderName};
+                builderName : nodeData.builderName,
+                redirectURL: nodeData.redirectUrl
+              };
     
     return temp;
   }
 
    //Function is responsible for finding possible builders and insert them into the builderName Array.
   function findBuilder(stringListIndex,serverTrial,resolve,reject){
-    console.log("Here I am :"+this.searchString[stringListIndex].strText+" "+stringListIndex);
     var query=this.searchString[stringListIndex].strText;
     if(this.searchString[stringListIndex].strText.indexOf("%")>=0) query="";   //Invalid search string.
     
@@ -53,7 +54,6 @@ var Search=(function(){
       data:data,
       success: function(response) {
          if(response.data != ""){
-           console.log(response.data);
            //Loop to scan through the results of builders
            for(var index=0; index < response.data.length; index++){
             if(response.data[index].builderName ){    //If buildername exists
@@ -69,8 +69,6 @@ var Search=(function(){
                   this.builderlock=true;
                   if(this.builderName.indexOf(this.searchString[stringListIndex].strText.toLowerCase())<0){
                     this.builderName.push(this.searchString[stringListIndex].strText.toLowerCase());   //Inserting the search string and not the actual builder name.
-                    //this.builderName.push(response.data[index].builderName);
-                    console.log("hey1 "+this.searchString[stringListIndex].strText);
                     
                   }
                   this.builderlock=false; //Releasing the lock
@@ -89,7 +87,7 @@ var Search=(function(){
                     if(this.builderName.indexOf(tempValue.toLowerCase())<0){
                       this.builderName.push(tempValue.toLowerCase());
                       //this.builderName.push(response.data[index].builderName);
-                      console.log("hey3 "+tempValue);
+                      
                       
                     }
                     this.builderlock=false; //Releasing the lock
@@ -103,7 +101,6 @@ var Search=(function(){
                 //If the search string Contains the builder name. If search string has extra text. In that case we push actual builder name.
                 if(this.builderName.indexOf(response.data[index].builderName.toLowerCase())<0){
                   this.builderName.push(response.data[index].builderName.toLowerCase());
-                  console.log("hey2 "+response.data[index].builderName);
                 }
                 this.builderlock=false; //Releasing the lock
               }
@@ -115,14 +112,14 @@ var Search=(function(){
         //Calling the function recusively for other strings as well and at the end calling the talkToMakan function for getting project List.  
        this.builderSearchCompleteIndex++;
        if(this.builderSearchCompleteIndex==this.totalBuilderSearch){
-          console.log("Builder Name List for :");
+          console.log("\nBuilder Name List for :");
           console.log(this.builderName);
           resolve(this.builderName);
           //talkToMakan.call(this,0,0,0);
         }
 
       }.bind(this),//end of success
-      error: function(xhr, status,errorThrown){
+      error: function(err){
           if(serverTrial<5)
             findBuilder.call(this,stringListIndex,serverTrial+1,resolve,reject);
           else{
@@ -133,8 +130,7 @@ var Search=(function(){
                resolve(this.builderName);
             }
 
-
-            console.log("YYYYYYYYYYYYYYYYYYYYYYYYYY\n\nCould not connect to the API"+errorThrown); //Code to handle if could not connect to API.
+            console.log("\nError: Could not connect to the API"); //Code to handle if could not connect to API.
 
           }
           
@@ -163,7 +159,7 @@ var Search=(function(){
 
       var url = "https://www.makaan.com/columbus/app/v6/typeahead?query="+query+"&typeAheadType=PROJECT&city=&usercity=&rows=6&enhance=gp&category=buy&view=buyer&sourceDomain=Makaan&format=json";
       var data = {};
-      console.log(query);
+     
       
       
       $.ajax({
@@ -172,10 +168,9 @@ var Search=(function(){
         data:data,
         success: function(response) {
 
-          console.log(query);
-          console.log(response);
+         
+         
           if(response.data!=""){
-            console.log(response.data.length);
             for(var index=0; index<response.data.length;index++){
               var temp=new resultString();
               temp.resObject=createResultNode(response.data[index]);
@@ -204,16 +199,15 @@ var Search=(function(){
           this.resultArrayLock=true;
           this.stringSearchCompleteIndex++;
           this.resultArrayLock=false;
-          console.log(this.stringSearchCompleteIndex +" " +this.totalStringSearch);
+          
           if(this.stringSearchCompleteIndex == this.totalStringSearch*(this.builderName.length+1)){
-                console.log(this.resultDataArray);
                 resolve(this.resultDataArray);
           }
 
         }.bind(this),  //End of success Function.
         
-        error: function(xhr, status,errorThrown){
-          console.log('Error');
+        error: function(err){
+          console.log('Error: '+ err);
           if(serverTrial<5)
             talkToMakan.call(this,stringListIndex,builderIndex,serverTrial+1,resolve,reject);
           else{
@@ -222,7 +216,7 @@ var Search=(function(){
                resolve(this.resultDataArray);
             }
 
-            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\nCould not connect to the Server: "+errorThrown);
+            console.log("\n\nError: Could not connect to the Server: ");
           }
         }.bind(this)
      });    //End of Ajax Call.
@@ -238,6 +232,8 @@ var Search=(function(){
       this.totalBuilderSearch=Math.min(this.totalBuilderSearch,this.searchString.length);
       this.builderSearchCompleteIndex=0;
       var builderSearch=new Promise(function(resolve,reject){
+        if(this.searchString.length==0)
+          resolve(this.resultDataArray);
         for(var index=0;index<this.totalBuilderSearch; index++){
             (function(tempIndex){
               findBuilder.call(this,tempIndex,0,resolve,reject); //StringListIndex, ServerTrials
@@ -249,15 +245,21 @@ var Search=(function(){
       return builderSearch.then(
         function(resolve){
             
+           
             //Invoking the Properties search calls
             this.stringSearchCompleteIndex=0;
             this.totalStringSearch=Math.min(this.totalStringSearch,this.searchString.length);
-            console.log(this.builderName.length+" "+this.totalStringSearch);
-            /*var makaanSearch=*/return new Promise(function(resolve,reject){
+            
+            return new Promise(function(resolve,reject){
+
+                 if(this.searchString.length==0)
+                    {resolve([]);
+                    return;
+                  }  
                 for(var index=0;index<=this.builderName.length; index++){
                   for(var innerIndex=0;innerIndex<this.totalStringSearch ;innerIndex++){
                       (function(builderIndex,stringListIndex){
-                          console.log(stringListIndex+" "+builderIndex);
+              
                           talkToMakan.call(this,stringListIndex,builderIndex,0,resolve,reject);
                       }).call(this,index,innerIndex);
                     }  

@@ -8,6 +8,5 @@ module.exports = function(app) {
 };
 
 function rootHandler(req, res) {
-	console.log('Here I am');
     res.render('index');
 }
