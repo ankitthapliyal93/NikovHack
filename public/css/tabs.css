@@ -18,7 +18,9 @@ div.tab a {
     text-decoration: none;
     transition: 0.3s;
     font-size: 17px;
+
 }
+
 
 /* Change background color of links on hover */
 div.tab a:hover {
@@ -29,6 +31,18 @@ div.tab a:hover {
 div.tab a:focus, .active {
     background-color: #ccc;
 }
+/*
+#defaultOpen{
+    background:url('../img/capture.svg') no-repeat left;
+    background-size:24px;
+}
+
+#upload-tab{
+    background:url('../img/upload.svg') no-repeat left;
+    background-size:24px;
+}
+
+*/
 
 /* Style the tab content */
 .tabcontent {
