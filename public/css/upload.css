@@ -7,7 +7,7 @@
     margin:8% auto;
 }
 
-input[type=file]{
+input[type=file],input[type=text]{
     width: 100%;
     padding: 4% 7%;
     margin: 3% auto;
@@ -17,7 +17,7 @@ input[type=file]{
     box-sizing: border-box;
 }
 
-#submit {
+.submit-button{
     width: 40%;
     background-color: #4CAF50;
     color: white;
@@ -28,7 +28,7 @@ input[type=file]{
     cursor: pointer;
 }
 
-#submit:hover {
+.submit-button:hover {
     background-color: #45a049;
 }
 

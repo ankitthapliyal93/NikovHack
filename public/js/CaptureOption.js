@@ -79,9 +79,10 @@ var CaptureOption =( function() {
 
   function navigatorFailureHandler(err) {
             
+
             if(!this.tried){
               this.tried=true;
-              this.resetCamera();
+              this.resetCamera.call(this);
               return;
             }
             alert("Could not connect to the camera!");
@@ -116,7 +117,7 @@ var CaptureOption =( function() {
     startUp: function() {
       
       document.getElementById("defaultOpen").click(); //For default opening of the tab. 
-      //new Callback();    //TO initialize the call-back functionality.
+      new Callback();    //TO initialize the call-back functionality.
       this.video = document.getElementById('video');
       this.photo = document.getElementById('photo');
       this.startbutton = document.getElementById('startbutton');
@@ -126,7 +127,7 @@ var CaptureOption =( function() {
                              navigator.webkitGetUserMedia ||
                              navigator.mozGetUserMedia ||
                              navigator.msGetUserMedia);
-      navigator.getMedia({video: true,audio: false},navigatorSuccessHandler.bind(this),navigatorFailureHandler); 
+      navigator.getMedia({video: true,audio: false},navigatorSuccessHandler.bind(this),navigatorFailureHandler.bind(this)); 
 
       
       this.video.addEventListener('canplay', canPlayHandler.bind(this), false);
@@ -181,12 +182,11 @@ var CaptureOption =( function() {
             },
 
       resetCamera: function(){
-
           navigator.getMedia = ( navigator.getUserMedia ||
                                  navigator.webkitGetUserMedia ||
                                  navigator.mozGetUserMedia ||
                                  navigator.msGetUserMedia);
-          navigator.getMedia({video: true,audio: false},navigatorSuccessHandler.bind(this),navigatorFailureHandler); 
+          navigator.getMedia({video: true,audio: false},navigatorSuccessHandler.bind(this),navigatorFailureHandler.bind(this)); 
           this.clearphoto();
           $(".camera-result-wrapper").hide();
           $(".camera").show();

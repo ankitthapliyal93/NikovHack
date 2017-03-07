@@ -19,6 +19,7 @@
 /* Modal Content */
 .modal-content {
     position: fixed;
+    padding:0px;
     bottom: 0;
     background-color: #fefefe;
     width: 100%;
@@ -44,12 +45,14 @@
 }
 
 .modal-header {
-    padding: 2px 16px;
-    background-color: #5cb85c;
+    padding: 10px 16px;
+    background-color: #337ab7;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px; 
     color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body {padding: 10px 16px;}
 
 .modal-footer {
     padding: 2px 16px;

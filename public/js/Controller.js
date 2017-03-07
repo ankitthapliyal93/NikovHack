@@ -40,20 +40,25 @@ var Controller= (function(){
 				$('.feedback-thanks').hide();
                 
                 $(document).ready(function(){
-					$("#"+this.requestType+"Yes").click(function(){ 
+					$("#"+this.requestType+"Yes").click(function(){
+							$("#"+this.requestType+"Yes").prop("disabled",true); 
 							var feedback=new Feedback(this.base64Data,1);
 							feedback.collectFeedback();
 							$('.feedback-ask').hide();
 							$('.feedback-thanks').show();
+							$("#"+this.requestType+"Yes").prop("disabled",false);
 
 						}.bind(this)
 						
 					);
-					$("#"+this.requestType+"No").click(function(){ 
+					$("#"+this.requestType+"No").click(function(){
+							$("#"+this.requestType+"No").prop("disabled",true); 
 							var feedback=new Feedback(this.base64Data,0);
 							feedback.collectFeedback();
 							$('.feedback-ask').hide();
 							$('.feedback-thanks').show();
+							$("#"+this.requestType+"No").prop("disabled",false);
+
 
 						}.bind(this)
 					);
